@@ -40,12 +40,11 @@ void Texture2D::Free()
 	}
 }
 
-void Texture2D::Render(Vector2D newPosition, SDL_RendererFlip flip, double angle)
+void Texture2D::Render(Vector2D newPosition, SDL_RendererFlip flip, int angle)
 {
-
 	SDL_SetRenderDrawColor(mRenderer, 0x45, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(mRenderer);
-	SDL_Rect renderLocation = { 0, 0, mWidth, mHeight };
-	SDL_RenderCopyEx(mRenderer, mTexture, NULL, &renderLocation, angle, NULL, SDL_FLIP_NONE);
+	SDL_Rect renderLocation = {0, 0, mWidth, mHeight};
+	SDL_RenderCopyEx(mRenderer, mTexture, NULL, 0, angle, NULL, SDL_FLIP_NONE);
 	SDL_RenderPresent(mRenderer);
 }

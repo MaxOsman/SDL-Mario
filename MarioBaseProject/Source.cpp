@@ -123,25 +123,6 @@ void Render()
 {
 	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0x00);
 	SDL_RenderClear(gRenderer);
-	gTexture->Render(Vector2D(), SDL_FLIP_NONE);
+	gTexture->Render(Vector2D(), SDL_FLIP_NONE, angle);
 	SDL_RenderPresent(gRenderer);
 }
-
-/*SDL_Texture* LoadTextureFromFile(string path)
-{
-	FreeTexture();
-	SDL_Texture* pTexture = NULL;
-	SDL_Surface* pSurface = SDL_LoadBMP(path.c_str());
-	pTexture = SDL_CreateTextureFromSurface(gRenderer, pSurface);
-	SDL_FreeSurface(pSurface);
-	return pTexture;
-}
-
-void FreeTexture()
-{
-	if (gTexture != NULL)
-	{
-		SDL_DestroyTexture(gTexture);
-		gTexture = NULL;
-	}
-}*/

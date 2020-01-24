@@ -14,7 +14,7 @@ public:
 
 	bool LoadFromFile(string path);
 	void Free();
-	void Render(Vector2D newPosition, SDL_RendererFlip flip, double angle = 0.0f);
+	void Render(Vector2D newPosition, SDL_RendererFlip flip, int angle = 0);
 
 	int GetWidth()
 	{
@@ -30,5 +30,4 @@ private:
 	SDL_Texture* mTexture;
 	int mWidth;
 	int mHeight;
-
 };
