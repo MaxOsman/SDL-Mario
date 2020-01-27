@@ -5,11 +5,12 @@
 #include "Commons.h"
 #include "Constants.h"
 #include <iostream>
+#include "GameScreenManager.h"
 
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
-//SDL_Texture* gTexture = NULL;
-Texture2D* gTexture = NULL;
+GameScreenManager* gameScreenManager;
+Uint32 gOldTime;
 
 using namespace std;
 
@@ -18,13 +19,13 @@ void CloseSDL();
 bool Update();
 
 void Render();
-//SDL_Texture* LoadTextureFromFile(string path);
-//void FreeTexture();
 int angle = 0;
 
 int main(int argc, char* args[])
 {
 	InitSDL();
+	gameScreenManager = new GameScreenManager(gRenderer, SCREEN_LEVEL1);
+	gOldTime = SDL_GetTicks();
 	bool quit = false;
 
 	while (!quit)
@@ -57,24 +58,6 @@ bool InitSDL()
 
 		gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 
-		/*if (gRenderer != NULL)
-		{
-			int imageFlags = IMG_INIT_PNG;
-			if (!(IMG_Init(imageFlags) & imageFlags))
-			{
-				cout << "SDL_Image could not initialise. Error: " << IMG_GetError();
-				return false;
-			}
-			else
-			{
-				cout << "Renderer could not initialise. Error: " << SDL_GetError();
-				return false;
-			}
-		}*/
-
-		gTexture = new Texture2D(gRenderer);
-		if (!gTexture->LoadFromFile("Images/test.bmp"))
-			return false;
 		return true;
 	}
 }
@@ -82,18 +65,17 @@ bool InitSDL()
 void CloseSDL()
 {
 	SDL_DestroyWindow(gWindow);
-	delete gTexture;
-	gTexture = NULL;
-	//FreeTexture();
+	delete gameScreenManager;
+	gameScreenManager = NULL;
 	SDL_DestroyRenderer(gRenderer);
 	gRenderer = NULL;
 	gWindow = NULL;
-	//IMG_Quit();
 	SDL_Quit();
 }
 
 bool Update()
 {
+	Uint32 newTime = SDL_GetTicks();
 	SDL_Event e;
 	SDL_PollEvent(&e);
 	cout << SDL_GetError();
@@ -116,6 +98,9 @@ bool Update()
 		break;
 	}
 
+	gameScreenManager->Update((float)(newTime - gOldTime) / 1000.0f, e);
+	gOldTime = newTime;
+
 	return false;
 }
 
@@ -123,6 +108,6 @@ void Render()
 {
 	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0x00);
 	SDL_RenderClear(gRenderer);
-	gTexture->Render(Vector2D(), SDL_FLIP_NONE, angle);
+	gameScreenManager->Render(angle);
 	SDL_RenderPresent(gRenderer);
 }

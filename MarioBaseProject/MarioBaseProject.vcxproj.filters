@@ -21,6 +21,15 @@
     <ClCompile Include="Texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScreenLevel1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScreenManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">
@@ -30,6 +39,18 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScreen.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScreenLevel1.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScreenManager.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
