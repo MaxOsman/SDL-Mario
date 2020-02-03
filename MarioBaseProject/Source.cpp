@@ -65,9 +65,9 @@ bool InitSDL()
 void CloseSDL()
 {
 	SDL_DestroyWindow(gWindow);
+	SDL_DestroyRenderer(gRenderer);
 	delete gameScreenManager;
 	gameScreenManager = NULL;
-	SDL_DestroyRenderer(gRenderer);
 	gRenderer = NULL;
 	gWindow = NULL;
 	SDL_Quit();

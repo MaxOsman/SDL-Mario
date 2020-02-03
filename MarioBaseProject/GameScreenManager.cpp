@@ -13,6 +13,7 @@ GameScreenManager::GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen
 
 GameScreenManager::~GameScreenManager()
 {
+	delete mRenderer;
 	mRenderer = NULL;
 	delete mCurrentScreen;
 	mCurrentScreen = NULL;

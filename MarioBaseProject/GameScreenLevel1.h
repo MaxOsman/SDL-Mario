@@ -3,13 +3,17 @@
 #include "SDL.h"
 #include "Commons.h"
 #include "GameScreen.h"
+#include "Character.h"
 
 class Texture2D;
+class Character;
+
 class GameScreenLevel1 : GameScreen
 {
 private:
 	Texture2D* mBackgroundTexture;
 	bool SetUpLevel();
+	Character* myCharacter;
 
 public:
 	GameScreenLevel1(SDL_Renderer* renderer);

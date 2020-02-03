@@ -40,7 +40,7 @@ void Texture2D::Free()
 	}
 }
 
-void Texture2D::Render(Vector2D newPosition, SDL_RendererFlip flip, int angle)
+void Texture2D::Render(Vector2D newPosition, int angle)
 {
 	SDL_SetRenderDrawColor(mRenderer, 0x45, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(mRenderer);
