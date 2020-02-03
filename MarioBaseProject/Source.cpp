@@ -12,6 +12,7 @@ SDL_Renderer* gRenderer = NULL;
 GameScreenManager* gameScreenManager;
 Uint32 gOldTime;
 
+
 using namespace std;
 
 bool InitSDL();
@@ -66,7 +67,6 @@ void CloseSDL()
 {
 	SDL_DestroyWindow(gWindow);
 	SDL_DestroyRenderer(gRenderer);
-	delete gameScreenManager;
 	gameScreenManager = NULL;
 	gRenderer = NULL;
 	gWindow = NULL;
@@ -84,17 +84,6 @@ bool Update()
 	{
 	case SDL_QUIT:
 		return true;
-		break;
-	case SDL_KEYDOWN:
-		switch (e.key.keysym.sym)
-		{
-		case SDLK_LEFT:
-			angle-=6;
-			break;
-		case SDLK_RIGHT:
-			angle+=6;
-			break;
-		}
 		break;
 	}
 

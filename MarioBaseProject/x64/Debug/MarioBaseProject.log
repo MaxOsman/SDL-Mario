@@ -1,8 +1,2 @@
-﻿  GameScreenLevel1.cpp
-  GameScreenManager.cpp
-D:\Uni\SDL-Mario3\MarioBaseProject\GameScreenManager.cpp(16,18): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
-D:\Uni\SDL-Mario3\MarioBaseProject\SDL2-2.0.10\include\SDL_render.h(122): message : see declaration of 'SDL_Renderer'
-  Generating Code...
-D:\Uni\SDL-Mario3\MarioBaseProject\GameScreenLevel1.cpp(41): warning C4715: 'GameScreenLevel1::SetUpLevel': not all control paths return a value
-GameScreenManager.obj : error LNK2005: "class Character * myCharacter" (?myCharacter@@3PEAVCharacter@@EA) already defined in GameScreenLevel1.obj
-D:\Uni\SDL-Mario3\x64\Debug\MarioBaseProject.exe : fatal error LNK1169: one or more multiply defined symbols found
+﻿  Character.cpp
+  MarioBaseProject.vcxproj -> C:\Users\o010617j\Documents\Mario4\x64\Debug\MarioBaseProject.exe

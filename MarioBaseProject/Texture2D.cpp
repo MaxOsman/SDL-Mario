@@ -21,7 +21,7 @@ bool Texture2D::LoadFromFile(string path)
 	Free();
 	SDL_Surface* pSurface = SDL_LoadBMP(path.c_str());
 	SDL_SetColorKey(pSurface, SDL_TRUE, SDL_MapRGB(pSurface->format, 0, 0xFF, 0xFF));
-	if (mTexture != NULL)
+	if (pSurface != NULL)
 	{
 		mWidth = pSurface->w;
 		mHeight = pSurface->h;
@@ -40,11 +40,11 @@ void Texture2D::Free()
 	}
 }
 
-void Texture2D::Render(Vector2D newPosition, int angle)
+void Texture2D::Render(Vector2D newPosition, SDL_RendererFlip flip)
 {
-	SDL_SetRenderDrawColor(mRenderer, 0x45, 0xFF, 0xFF, 0xFF);
-	SDL_RenderClear(mRenderer);
-	SDL_Rect renderLocation = {0, 0, mWidth, mHeight};
-	SDL_RenderCopyEx(mRenderer, mTexture, NULL, 0, angle, NULL, SDL_FLIP_NONE);
-	SDL_RenderPresent(mRenderer);
+	SDL_Rect* renderLocation = new SDL_Rect{0, 0, mWidth, mHeight};
+	SDL_Rect* renderDst = new SDL_Rect { (int)newPosition.x, (int)newPosition.y, mWidth, mHeight };
+	SDL_RenderCopyEx(mRenderer, mTexture, renderLocation, renderDst, NULL, NULL, flip);
+	delete renderLocation;
+	delete renderDst;
 }
