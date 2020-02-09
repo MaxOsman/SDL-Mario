@@ -31,3 +31,23 @@ struct Vector2D
 		y = 0;
 	}
 };
+
+struct Rect2D
+{
+	float x;
+	float y;
+	float w;
+	float h;
+	Rect2D(float xx, float yy, float ww, float hh)
+	{
+		x = xx;
+		y = yy;
+	}
+	Rect2D()
+	{
+		x = 0;
+		y = 0;
+		w = 0;
+		h = 0;
+	}
+};

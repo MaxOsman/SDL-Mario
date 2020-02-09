@@ -13,13 +13,13 @@ GameScreenLevel1::~GameScreenLevel1()
 {
 	delete mBackgroundTexture;
 	mBackgroundTexture = NULL;
-	delete myCharacter;
-	myCharacter = NULL;
+	delete marioCharacter;
+	marioCharacter = NULL;
 }
 
 void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 {
-	myCharacter->Update(deltaTime, e);
+	marioCharacter->Update(deltaTime, e);
 }
 
 void GameScreenLevel1::Render(int angle)
@@ -28,15 +28,15 @@ void GameScreenLevel1::Render(int angle)
 	SDL_RenderClear(mRenderer);
 
 	mBackgroundTexture->Render(Vector2D(0, 0), SDL_FLIP_NONE);
-	myCharacter->Render();
+	marioCharacter->Render();
 
 	SDL_RenderPresent(mRenderer);
 }
 
 bool GameScreenLevel1::SetUpLevel()
 {
-	//Player Character
-	myCharacter = new Character(mRenderer, "Images/Mario.bmp", Vector2D(0, 0));
+	//Player Characters
+	marioCharacter = new Character(mRenderer, "Images/Mario.bmp", Vector2D(128, 200));
 
 	//Background
 	mBackgroundTexture = new Texture2D(mRenderer);

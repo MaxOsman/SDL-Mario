@@ -12,7 +12,6 @@ SDL_Renderer* gRenderer = NULL;
 GameScreenManager* gameScreenManager;
 Uint32 gOldTime;
 
-
 using namespace std;
 
 bool InitSDL();
