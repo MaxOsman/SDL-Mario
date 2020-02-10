@@ -42,6 +42,8 @@ struct Rect2D
 	{
 		x = xx;
 		y = yy;
+		w = ww;
+		h = hh;
 	}
 	Rect2D()
 	{

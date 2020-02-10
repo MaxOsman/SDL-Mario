@@ -2,7 +2,7 @@
 #include "Texture2D.h"
 #include "Constants.h"
 
-Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition)
+Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map)
 {
 	mPosition = startPosition;
 	mFacingDirection = FACING_RIGHT;
@@ -17,6 +17,7 @@ Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D startPos
 	mIsGrounded = false;
 	mIsRunning = false;
 	mJumpTime = MARIO_JUMP_TIME;
+	mCurrentLevelMap = map;
 }
 
 Character::~Character()
@@ -145,10 +146,11 @@ void Character::AddGravity()
 
 void Character::GroundCheck()
 {
-	//Temporary
-	if (mPosition.y > SCREEN_HEIGHT / 2)
+	centralXPosition = (int)(mPosition.x + (mTexture->GetWidth() * 0.5f)) / MARIO_WIDTH;
+	footPosition = (int)(mPosition.y + mTexture->GetHeight()) / MARIO_HEIGHT;
+	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) != 0)
 	{
-		mPosition.y = SCREEN_HEIGHT / 2;
+		mPosition.y = ;
 		mIsGrounded = true;
 		mJumpTime = MARIO_JUMP_TIME;
 	}	

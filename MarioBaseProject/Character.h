@@ -1,26 +1,19 @@
 #pragma once
 
-#define MARIO_GRAVITY_A 1.0f
-#define MARIO_WALK_A 0.1f
-#define MARIO_RUN_A 0.22f
-#define MARIO_GROUND_FRICTION_A 0.15f
-#define MARIO_GROUND_CAP 120.0f
-#define MARIO_START_VELOCITY_WALK 12.0f
-#define MARIO_GROUND_CAP_RUN 220.0f
-#define MARIO_START_VELOCITY_RUN 20.0f
-#define MARIO_JUMP_SPEED 350.0f
-#define MARIO_JUMP_TIME 0.1f
-
 #include "SDL.h"
 #include <iostream>
 #include "Commons.h"
+#include "LevelMap.h"
+#include "Texture2D.h"
 
 using namespace std;
-class Texture2D;
+//class Texture2D;
 
 class Character
 {
 private:
+	int centralXPosition;
+	int footPosition;
 	FACING mFacingDirection;
 	bool mMovingLeft;
 	bool mMovingRight;
@@ -31,13 +24,14 @@ private:
 	bool mHoldingJump;
 	bool mIsJumping;
 	float mJumpTime;
+	LevelMap* mCurrentLevelMap;
 protected:
 	SDL_Renderer* mRenderer;
 	Vector2D mPosition;
 	Texture2D* mTexture;
 
 public:
-	Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition);
+	Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map);
 	~Character();
 
 	virtual void Render();

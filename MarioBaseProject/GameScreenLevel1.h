@@ -3,6 +3,7 @@
 #include "Commons.h"
 #include "GameScreen.h"
 #include "Character.h"
+#include "LevelMap.h"
 
 class Texture2D;
 class Character;
@@ -21,4 +22,7 @@ public:
 
 	void Render(int angle);
 	void Update(float deltaTime, SDL_Event e);
+	void SetLevelMap();
+
+	LevelMap* mLevelMap;
 };
