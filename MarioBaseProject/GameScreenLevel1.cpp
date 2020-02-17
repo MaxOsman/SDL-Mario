@@ -14,6 +14,8 @@ GameScreenLevel1::~GameScreenLevel1()
 {
 	delete mBackgroundTexture;
 	mBackgroundTexture = NULL;
+	delete brickTexture;
+	brickTexture = NULL;
 	delete marioCharacter;
 	marioCharacter = NULL;
 }
@@ -30,6 +32,14 @@ void GameScreenLevel1::Render(int angle)
 
 	mBackgroundTexture->Render(Vector2D(0, 0), SDL_FLIP_NONE);
 	marioCharacter->Render();
+	for (unsigned int i = 0; i < MAP_HEIGHT; i++)
+	{
+		for (unsigned int j = 0; j < MAP_WIDTH; j++)
+		{
+			if(mLevelMap->GetTileAt(i, j) != 0)
+				brickTexture->Render(Vector2D(j * 32, i * 32), SDL_FLIP_NONE);
+		}
+	}
 
 	SDL_RenderPresent(mRenderer);
 }
@@ -64,7 +74,7 @@ bool GameScreenLevel1::SetUpLevel()
 	SetLevelMap();
 
 	//Player Characters
-	marioCharacter = new Character(mRenderer, "Images/Mario.bmp", Vector2D(128, 200), mLevelMap);
+	marioCharacter = new Character(mRenderer, "Images/Mario2.bmp", Vector2D(128, 200), mLevelMap);
 
 	//Background
 	mBackgroundTexture = new Texture2D(mRenderer);
@@ -72,5 +82,10 @@ bool GameScreenLevel1::SetUpLevel()
 	{
 		std::cout << "Failed to load background texture.";
 		return false;
+	}
+	brickTexture = new Texture2D(mRenderer);
+	if (!brickTexture->LoadFromFile("Images/brick.bmp"))
+	{
+		std::cout << "Failed to load brick texture.";
 	}
 }

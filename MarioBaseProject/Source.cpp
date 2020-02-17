@@ -43,7 +43,7 @@ bool InitSDL()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		cout << "SDL did not inittialise. Error: " << SDL_GetError();
+		cout << "SDL did not initialise. Error: " << SDL_GetError();
 		return false;
 	}
 	else

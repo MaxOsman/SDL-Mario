@@ -12,8 +12,11 @@ using namespace std;
 class Character
 {
 private:
-	int centralXPosition;
-	int footPosition;
+	float centralXPosition;
+	float leftXPosition;
+	float rightXPosition;
+	float footPosition;
+	float headPosition;
 	FACING mFacingDirection;
 	bool mMovingLeft;
 	bool mMovingRight;
@@ -22,6 +25,7 @@ private:
 	bool mIsGrounded;
 	bool mIsRunning;
 	bool mHoldingJump;
+	bool mHoldingJumpPreviousFrame;
 	bool mIsJumping;
 	float mJumpTime;
 	LevelMap* mCurrentLevelMap;

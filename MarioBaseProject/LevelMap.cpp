@@ -35,3 +35,9 @@ int LevelMap::GetTileAt(unsigned int h, unsigned int w)
 
 	return 0;
 }
+
+/*void LevelMap::Render(float x, float y, SDL_Renderer* renderer)
+{
+	Vector2D tempPosition(x * 32, y * 32);
+	brickTexture->Render(tempPosition, SDL_FLIP_NONE);
+}*/

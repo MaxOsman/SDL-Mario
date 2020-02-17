@@ -7,9 +7,10 @@ Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D startPos
 	mPosition = startPosition;
 	mFacingDirection = FACING_RIGHT;
 	mRenderer = renderer;
-	mTexture = new Texture2D(mRenderer);
 	mHoldingJump = false;
+	mHoldingJumpPreviousFrame = false;
 	mIsJumping = false;
+	mTexture = new Texture2D(mRenderer);
 	if (!mTexture->LoadFromFile(imagePath))
 	{
 		std::cout << "Failed to load background texture.";
@@ -146,29 +147,54 @@ void Character::AddGravity()
 
 void Character::GroundCheck()
 {
-	centralXPosition = (int)(mPosition.x + (mTexture->GetWidth() * 0.5f)) / MARIO_WIDTH;
-	footPosition = (int)(mPosition.y + mTexture->GetHeight()) / MARIO_HEIGHT;
-	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) != 0)
+	centralXPosition = (int)(mPosition.x + (mTexture->GetWidth() * 0.5f)) / TILE_WIDTH;
+	leftXPosition = (int)mPosition.x / TILE_WIDTH;
+	rightXPosition = (int)(mPosition.x + mTexture->GetWidth()) / TILE_WIDTH;
+	footPosition = (int)(mPosition.y + mTexture->GetHeight()) / TILE_WIDTH;
+	headPosition = (int)mPosition.y / TILE_WIDTH;
+	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) != 0 && mIsJumping == false)
 	{
-		mPosition.y = ;
+		mPosition.y = (footPosition - 1) * TILE_WIDTH;
 		mIsGrounded = true;
 		mJumpTime = MARIO_JUMP_TIME;
-	}	
+	}
 	else
 		mIsGrounded = false;
+	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) != 0)
+	{
+		mPosition.y = (headPosition + 1) * TILE_WIDTH;
+		mVelocity.y = 0;
+		mAccel.y = MARIO_GRAVITY_A;
+		mJumpTime = 0;
+		mIsJumping = false;
+	}
+	else if (mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) != 0)
+	{
+		mPosition.x = (leftXPosition + 1) * TILE_WIDTH;
+		mVelocity.x = 0;
+	}
+	else if (mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) != 0)
+	{
+		mPosition.x = (rightXPosition - 1) * TILE_WIDTH;
+		mVelocity.x = 0;
+	}
 }
 
 void Character::JumpCheck(float deltaTime)
 {
-	cout << mIsGrounded << "  " << mHoldingJump << "  " << mIsJumping << "  " << mJumpTime << endl;
+	cout << mIsGrounded << "  " << !mHoldingJumpPreviousFrame << " " << mHoldingJump << "  " << mIsJumping << "  " << mJumpTime << endl;
 
-	if ((mIsGrounded && mHoldingJump && !mIsJumping && mJumpTime > 0) ||
+	if ((mIsGrounded && !mHoldingJumpPreviousFrame && mHoldingJump && !mIsJumping && mJumpTime > 0) ||
 		(!mIsGrounded && mHoldingJump && mIsJumping && mJumpTime > 0))
 	{
+		if (mVelocity.y == 0)
+			mVelocity.y = 1;
+
 		if(mVelocity.x >= 0)
 			mVelocity.y = -(MARIO_JUMP_SPEED + mVelocity.x*0.4);
 		else
 			mVelocity.y = -(MARIO_JUMP_SPEED - mVelocity.x*0.4);
+
 		mJumpTime -= deltaTime;
 		mIsJumping = true;
 		mIsGrounded = false;
@@ -215,6 +241,7 @@ void Character::AddFriction()
 
 void Character::GetInput(SDL_Event e)
 {
+	mHoldingJumpPreviousFrame = mHoldingJump;
 	switch (e.type)
 	{
 	case SDL_KEYDOWN:
