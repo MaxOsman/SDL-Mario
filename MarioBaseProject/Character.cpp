@@ -2,7 +2,7 @@
 #include "Texture2D.h"
 #include "Constants.h"
 
-Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map)
+Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario)
 {
 	mPosition = startPosition;
 	mFacingDirection = FACING_RIGHT;
@@ -19,6 +19,7 @@ Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D startPos
 	mIsRunning = false;
 	mJumpTime = MARIO_JUMP_TIME;
 	mCurrentLevelMap = map;
+	arcadeMario = isArcadeMario;
 }
 
 Character::~Character()
@@ -48,6 +49,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 	SpeedCap();
 
 	AddVelocity(deltaTime);
+	ScreenSideCheck(arcadeMario);
 }
 
 void Character::SetPosition(Vector2D newPosition)
@@ -152,28 +154,30 @@ void Character::GroundCheck()
 	rightXPosition = (int)(mPosition.x + mTexture->GetWidth()) / TILE_WIDTH;
 	footPosition = (int)(mPosition.y + mTexture->GetHeight()) / TILE_WIDTH;
 	headPosition = (int)mPosition.y / TILE_WIDTH;
-	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) != 0 && mIsJumping == false)
+	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == 1 && mIsJumping == false)
 	{
 		mPosition.y = (footPosition - 1) * TILE_WIDTH;
 		mIsGrounded = true;
-		mJumpTime = MARIO_JUMP_TIME;
+		mJumpTime = MARIO_JUMP_TIME; 
+		mAccel.y = 0;
+		mVelocity.y = 0;
 	}
 	else
+	{
 		mIsGrounded = false;
-	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) != 0)
+	}
+
+	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == 1)
 	{
 		mPosition.y = (headPosition + 1) * TILE_WIDTH;
-		mVelocity.y = 0;
-		mAccel.y = MARIO_GRAVITY_A;
-		mJumpTime = 0;
-		mIsJumping = false;
+		CancelJump();
 	}
-	else if (mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) != 0)
+	else if (mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == 1)
 	{
 		mPosition.x = (leftXPosition + 1) * TILE_WIDTH;
 		mVelocity.x = 0;
 	}
-	else if (mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) != 0)
+	else if (mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == 1)
 	{
 		mPosition.x = (rightXPosition - 1) * TILE_WIDTH;
 		mVelocity.x = 0;
@@ -279,4 +283,40 @@ void Character::GetInput(SDL_Event e)
 		}
 		break;
 	}
+}
+
+void Character::ScreenSideCheck(bool arcadeMario)
+{
+	if (arcadeMario)
+	{
+		if (mPosition.x < -MARIO_WIDTH/2)
+		{
+			mPosition.x = 512 - MARIO_WIDTH / 2;
+		}
+		if (mPosition.x > 512 - MARIO_WIDTH/2)
+		{
+			mPosition.x = -MARIO_WIDTH / 2;
+		}
+	}
+	else
+	{
+		if (mPosition.x < -MARIO_WIDTH/2)
+		{
+			mPosition.x = MARIO_WIDTH / 2;
+			mVelocity.x = 0;
+		}
+		if (mPosition.x > 512 - MARIO_WIDTH / 2)
+		{
+			mPosition.x = 512 - MARIO_WIDTH / 2;
+			mVelocity.x = 0;
+		}
+	}
+}
+
+void Character::CancelJump()
+{
+	mVelocity.y = 0;
+	mAccel.y = MARIO_GRAVITY_A;
+	mJumpTime = 0;
+	mIsJumping = false;
 }

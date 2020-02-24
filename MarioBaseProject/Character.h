@@ -22,25 +22,27 @@ private:
 	bool mMovingRight;
 	Vector2D mVelocity;
 	Vector2D mAccel;
-	bool mIsGrounded;
 	bool mIsRunning;
 	bool mHoldingJump;
 	bool mHoldingJumpPreviousFrame;
+	bool mIsGrounded;
 	bool mIsJumping;
 	float mJumpTime;
 	LevelMap* mCurrentLevelMap;
+	bool arcadeMario;
 protected:
 	SDL_Renderer* mRenderer;
 	Vector2D mPosition;
 	Texture2D* mTexture;
 
 public:
-	Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map);
+	Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario);
 	~Character();
 
 	virtual void Render();
 	virtual void Update(float deltaTime, SDL_Event e);
 
+	bool mIsOnPowBlock;
 	void AddVelocity(float deltaTime);
 	void AddGravity();
 	void SpeedCap();
@@ -49,9 +51,20 @@ public:
 	void AddFriction();
 	void GetInput(SDL_Event e);
 	void JumpCheck(float deltaTime);
-
+	void ScreenSideCheck(bool arcadeMario);
+	void CancelJump();
 	void SetPosition(Vector2D newPosition);
+	void LandingProceedure(int powYPos) 
+	{ 
+		mIsGrounded = true; 
+		mJumpTime = MARIO_JUMP_TIME; 
+		mAccel.y = 0; 
+		mPosition.y = powYPos - MARIO_HEIGHT;
+		mVelocity.y = 0;
+	}
 	Vector2D GetPosition();
+	Vector2D GetVelocity() { return mVelocity; }
+	Texture2D* GetTexture() { return mTexture; }
 
 	Rect2D GetCollisionBox()
 	{

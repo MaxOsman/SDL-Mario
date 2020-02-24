@@ -15,6 +15,7 @@ public:
 	bool LoadFromFile(string path);
 	void Free();
 	void Render(Vector2D newPosition, SDL_RendererFlip flip);
+	void Render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip);
 
 	int GetWidth()
 	{

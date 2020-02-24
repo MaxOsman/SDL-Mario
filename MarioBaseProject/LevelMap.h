@@ -9,6 +9,7 @@ public:
 	~LevelMap();
 	//void Render(float x, float y, SDL_Renderer* renderer);
 	int GetTileAt(unsigned int h, unsigned int w);
+	void ChangeTileAt(unsigned int row, unsigned int column, unsigned int newValue);
 
 private:
 	int** mMap;

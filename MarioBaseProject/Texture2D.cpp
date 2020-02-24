@@ -48,3 +48,8 @@ void Texture2D::Render(Vector2D newPosition, SDL_RendererFlip flip)
 	delete renderLocation;
 	delete renderDst;
 }
+
+void Texture2D::Render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip)
+{
+	SDL_RenderCopyEx(mRenderer, mTexture, &srcRect, &destRect, NULL, NULL, flip);
+}
