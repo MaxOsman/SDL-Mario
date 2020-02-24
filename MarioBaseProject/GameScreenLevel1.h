@@ -15,9 +15,15 @@ private:
 	Texture2D* mBackgroundTexture;
 	//Texture2D* brickTexture;
 	bool SetUpLevel();
+	void DoScreenShake();
 	Character* marioCharacter;
 	Character* luigiCharacter;
 	PowBlock* mPowBlock;
+
+	bool mScreenShake;
+	float mScreenShakeTime;
+	float mWobble;
+	float mBackgroundYPos;
 
 public:
 	GameScreenLevel1(SDL_Renderer* renderer);

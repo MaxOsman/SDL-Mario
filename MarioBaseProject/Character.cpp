@@ -122,18 +122,15 @@ void Character::MovementCheck()
 
 void Character::SpeedCap()
 {
-	//if (mIsGrounded)
-	//{
-		if (mVelocity.x > MARIO_GROUND_CAP && !mIsRunning)
-			mVelocity.x -= 0.2;
-		else if (mVelocity.x < -MARIO_GROUND_CAP && !mIsRunning)
-			mVelocity.x += 0.2;
+	if (mVelocity.x > MARIO_GROUND_CAP && !mIsRunning)
+		mVelocity.x -= 0.2;
+	else if (mVelocity.x < -MARIO_GROUND_CAP && !mIsRunning)
+		mVelocity.x += 0.2;
 
-		if (mVelocity.x > MARIO_GROUND_CAP_RUN && mIsRunning)
-			mVelocity.x = MARIO_GROUND_CAP_RUN;
-		else if (mVelocity.x < -MARIO_GROUND_CAP_RUN && mIsRunning)
-			mVelocity.x = -MARIO_GROUND_CAP_RUN;
-	//}
+	if (mVelocity.x > MARIO_GROUND_CAP_RUN && mIsRunning)
+		mVelocity.x = MARIO_GROUND_CAP_RUN;
+	else if (mVelocity.x < -MARIO_GROUND_CAP_RUN && mIsRunning)
+		mVelocity.x = -MARIO_GROUND_CAP_RUN;
 }
 
 void Character::AddGravity()
@@ -195,9 +192,9 @@ void Character::JumpCheck(float deltaTime)
 			mVelocity.y = 1;
 
 		if(mVelocity.x >= 0)
-			mVelocity.y = -(MARIO_JUMP_SPEED + mVelocity.x*0.4);
+			mVelocity.y = -(MARIO_JUMP_SPEED + mVelocity.x*0.3);
 		else
-			mVelocity.y = -(MARIO_JUMP_SPEED - mVelocity.x*0.4);
+			mVelocity.y = -(MARIO_JUMP_SPEED - mVelocity.x*0.3);
 
 		mJumpTime -= deltaTime;
 		mIsJumping = true;

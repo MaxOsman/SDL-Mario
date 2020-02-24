@@ -42,7 +42,6 @@ public:
 	virtual void Render();
 	virtual void Update(float deltaTime, SDL_Event e);
 
-	bool mIsOnPowBlock;
 	void AddVelocity(float deltaTime);
 	void AddGravity();
 	void SpeedCap();
@@ -54,14 +53,6 @@ public:
 	void ScreenSideCheck(bool arcadeMario);
 	void CancelJump();
 	void SetPosition(Vector2D newPosition);
-	void LandingProceedure(int powYPos) 
-	{ 
-		mIsGrounded = true; 
-		mJumpTime = MARIO_JUMP_TIME; 
-		mAccel.y = 0; 
-		mPosition.y = powYPos - MARIO_HEIGHT;
-		mVelocity.y = 0;
-	}
 	Vector2D GetPosition();
 	Vector2D GetVelocity() { return mVelocity; }
 	Texture2D* GetTexture() { return mTexture; }

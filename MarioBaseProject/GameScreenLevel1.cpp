@@ -26,6 +26,18 @@ GameScreenLevel1::~GameScreenLevel1()
 
 void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 {
+	if(mScreenShake)
+	{
+		mScreenShakeTime -= deltaTime;
+		mWobble++;
+		mBackgroundYPos = sin(mWobble);
+		mBackgroundYPos *= 3.0f;
+		if (mScreenShakeTime <= 0.0f)
+		{
+			mScreenShake = false;
+			mBackgroundYPos = 0.0f;
+		}
+	}
 	marioCharacter->Update(deltaTime, e);
 	UpdatePowBlock();
 }
@@ -35,7 +47,7 @@ void GameScreenLevel1::Render(int angle)
 	SDL_SetRenderDrawColor(mRenderer, 0x45, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(mRenderer);
 
-	mBackgroundTexture->Render(Vector2D(0, 0), SDL_FLIP_NONE);
+	mBackgroundTexture->Render(Vector2D(0, mBackgroundYPos), SDL_FLIP_NONE);
 	marioCharacter->Render();
 	mPowBlock->Render();
 	/*for (unsigned int i = 0; i < MAP_HEIGHT; i++)
@@ -60,7 +72,7 @@ void GameScreenLevel1::SetLevelMap()
 										{ 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0 },
 										{ 1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1 },
 										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+										{ 0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0 },
 										{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1 },
 										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
@@ -81,6 +93,8 @@ bool GameScreenLevel1::SetUpLevel()
 
 	//Pow Block
 	mPowBlock = new PowBlock(mRenderer, mLevelMap);
+	mScreenShake = false;
+	mBackgroundYPos = 0.0f;
 
 	//Player Characters
 	marioCharacter = new Character(mRenderer, "Images/Mario2.bmp", Vector2D(128, 200), mLevelMap, true);
@@ -124,18 +138,16 @@ void GameScreenLevel1::UpdatePowBlock()
 	{
 		if (mMarioRect.y > mPowRect.y+mPowRect.h/2 && mVelocity.y < 0 && mPowBlock->IsAvailable())
 		{
-			//DoScreenShake();
+			DoScreenShake();
 			mPowBlock->TakeAHit();
 			marioCharacter->CancelJump();
 		}
-
-		if (mMarioRect.y < mPowRect.y + mPowRect.h/2 && mVelocity.y >= 0 && mPowBlock->IsAvailable())
-		{
-			cout << endl;
-			marioCharacter->mIsOnPowBlock = true;
-			marioCharacter->LandingProceedure(mPowRect.y);
-		}
-		else
-			marioCharacter->mIsOnPowBlock = false;
 	}
+}
+
+void GameScreenLevel1::DoScreenShake()
+{
+	mScreenShake = true;
+	mScreenShakeTime = SCREENSHAKE_DURATION;
+	mWobble = 0.0f;
 }
