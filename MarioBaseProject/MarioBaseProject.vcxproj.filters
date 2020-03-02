@@ -45,6 +45,9 @@
     <ClCompile Include="CharacterKoopa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ScreenGameOver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">
@@ -78,6 +81,9 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenGameOver.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>

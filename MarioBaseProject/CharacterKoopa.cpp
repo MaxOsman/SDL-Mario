@@ -82,9 +82,9 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 
 void CharacterKoopa::GroundCheck()
 {
-	centralXPosition = (int)(mPosition.x + (mTexture->GetWidth() * 0.5f)) / mSingleSpriteWidth;
+	centralXPosition = (int)(mPosition.x + (mTexture->GetWidth() * 0.25f)) / mSingleSpriteWidth;
 	leftXPosition = (int)mPosition.x / mSingleSpriteWidth;
-	rightXPosition = (int)(mPosition.x + mTexture->GetWidth()) / mSingleSpriteWidth;
+	rightXPosition = (int)(mPosition.x + (mTexture->GetWidth() * 0.5f)-1) / mSingleSpriteWidth;
 	footPosition = (int)(mPosition.y + mTexture->GetHeight()) / mSingleSpriteWidth;
 	headPosition = (int)mPosition.y / mSingleSpriteWidth;
 	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == 1)
@@ -117,17 +117,17 @@ void CharacterKoopa::GroundCheck()
 
 void CharacterKoopa::ScreenSideCheck()
 {
-	if (mPosition.x < -MARIO_WIDTH / 2)
+	if (mPosition.x < -mSingleSpriteWidth / 2)
 	{
-		mPosition.x = 512 - MARIO_WIDTH / 2;
+		mPosition.x = 512 - mSingleSpriteWidth / 2;
 		if (GetPosition().y > 300.0f)
 		{
 			isAlive = false;
 		}
 	}
-	if (mPosition.x > 512 - MARIO_WIDTH / 2)
+	if (mPosition.x > 512 - mSingleSpriteWidth / 2)
 	{
-		mPosition.x = -MARIO_WIDTH / 2;
+		mPosition.x = -mSingleSpriteWidth / 2;
 		if (GetPosition().y > 300.0f)
 		{
 			isAlive = false;

@@ -40,17 +40,30 @@ public:
 	void UpdateEnemies(float DeltaTime, SDL_Event e);
 	void CreateKoopa(Vector2D position, FACING direction);
 
-	bool CollisionsBox(Rect2D rect1, Rect2D rect2)
+	/*bool CollisionsBox(Rect2D rect1, Rect2D rect2)
 	{
-		if (rect1.x + (rect1.w / 2) > rect2.x&&
-			rect1.x + (rect1.w / 2) < rect2.x + rect2.w &&
-			rect1.y + (rect1.h / 2) > rect2.y&&
-			rect1.y + (rect1.h / 2) < rect2.y + rect2.h)
+		if (rect1.x + (rect1.w / 2) >= rect2.x&&
+			rect1.x + (rect1.w / 2) <= rect2.x + rect2.w &&
+			rect1.y + (rect1.h / 2) >= rect2.y&&
+			rect1.y + (rect1.h / 2) <= rect2.y + rect2.h)
 		{
 			return true;
 		}
 
 		return false;
+	}*/
+	bool CollisionsBox(Rect2D rect1, Rect2D rect2)
+	{
+		if (rect1.y + rect1.h < rect2.y)
+			return false;
+		if (rect1.y > rect2.y + rect2.h)
+			return false;
+		if (rect1.x + rect1.w < rect2.x)
+			return false;
+		if (rect1.x > rect2.x + rect2.w)
+			return false;
+
+		return true;
 	}
 
 	LevelMap* mLevelMap;

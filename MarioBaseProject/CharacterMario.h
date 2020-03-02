@@ -19,7 +19,6 @@ public:
 
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
-	void AddGravity();
 	void SpeedCap();
 	void GroundCheck();
 	void MovementCheck();

@@ -165,9 +165,10 @@ void GameScreenLevel1::UpdateEnemies(float deltaTime, SDL_Event e)
 				Rect2D mMarioRect = marioCharacter->GetCollisionBox();
 				if (CollisionsBox(mMarioRect, mEnemyRect))
 				{
-					if (mMarioRect.y < mEnemyRect.y - mEnemyRect.h / 2 && mMarioRect.x >= mEnemyRect.x - 12 && mMarioRect.x <= mEnemyRect.x + MARIO_WIDTH - 4 && marioCharacter->GetVelocity().y > 0)
+					if (mMarioRect.y < mEnemyRect.y - MARIO_HEIGHT + mEnemyRect.h / 2 && mMarioRect.x >= mEnemyRect.x - 12 && mMarioRect.x <= mEnemyRect.x + MARIO_WIDTH - 4 && marioCharacter->GetVelocity().y > 0)
 					{
 						mEnemies[i]->isAlive = false;
+						marioCharacter->CancelJump();
 					}
 					else
 					{
