@@ -10,6 +10,7 @@ Collisions::Collisions()
 
 Collisions::~Collisions()
 {
+	delete mInstance;
 	mInstance = NULL;
 }
 

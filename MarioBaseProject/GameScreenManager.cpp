@@ -13,15 +13,14 @@ GameScreenManager::GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen
 
 GameScreenManager::~GameScreenManager()
 {
-	delete mRenderer;
 	mRenderer = NULL;
 	delete mCurrentScreen;
 	mCurrentScreen = NULL;
 }
 
-void GameScreenManager::Render(int angle)
+void GameScreenManager::Render()
 {
-	mCurrentScreen->Render(angle);
+	mCurrentScreen->Render();
 }
 
 void GameScreenManager::Update(float deltaTime, SDL_Event e)
@@ -45,6 +44,7 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 		tempScreen = new GameScreenLevel1(mRenderer);
 		mCurrentScreen = (GameScreen*)tempScreen;
 		tempScreen = NULL;
+		delete tempScreen;
 		break;
 
 	}

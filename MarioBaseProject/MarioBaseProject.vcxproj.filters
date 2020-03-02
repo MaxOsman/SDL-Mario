@@ -30,16 +30,19 @@
     <ClCompile Include="GameScreenManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Collisions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LevelMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PowBlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterMario.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterKoopa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,16 +65,19 @@
     <ClInclude Include="GameScreenManager.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Collisions.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
     <ClInclude Include="LevelMap.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="PowBlock.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterKoopa.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterMario.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>

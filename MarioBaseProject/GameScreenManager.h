@@ -15,7 +15,7 @@ public:
 	GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen);
 	~GameScreenManager();
 
-	void Render(int angle);
+	void Render();
 	void Update(float deltaTime, SDL_Event e);
 
 	void ChangeScreen(SCREENS newScreen);

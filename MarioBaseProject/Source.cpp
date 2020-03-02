@@ -66,6 +66,7 @@ void CloseSDL()
 {
 	SDL_DestroyWindow(gWindow);
 	SDL_DestroyRenderer(gRenderer);
+	delete gameScreenManager;
 	gameScreenManager = NULL;
 	gRenderer = NULL;
 	gWindow = NULL;
@@ -96,6 +97,6 @@ void Render()
 {
 	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0x00);
 	SDL_RenderClear(gRenderer);
-	gameScreenManager->Render(angle);
+	gameScreenManager->Render();
 	SDL_RenderPresent(gRenderer);
 }

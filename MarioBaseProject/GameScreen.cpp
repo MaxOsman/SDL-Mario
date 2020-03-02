@@ -15,7 +15,7 @@ void GameScreen::Update(float deltaTime, SDL_Event e)
 
 }
 
-void GameScreen::Render(int angle)
+void GameScreen::Render()
 {
 
 }

@@ -1,17 +1,9 @@
 #pragma once
-
-#include "SDL.h"
-#include <iostream>
-#include "Commons.h"
 #include "LevelMap.h"
-#include "Texture2D.h"
-
-using namespace std;
-//class Texture2D;
 
 class Character
 {
-private:
+protected:
 	float centralXPosition;
 	float leftXPosition;
 	float rightXPosition;
@@ -22,18 +14,12 @@ private:
 	bool mMovingRight;
 	Vector2D mVelocity;
 	Vector2D mAccel;
-	bool mIsRunning;
-	bool mHoldingJump;
-	bool mHoldingJumpPreviousFrame;
 	bool mIsGrounded;
-	bool mIsJumping;
-	float mJumpTime;
-	LevelMap* mCurrentLevelMap;
-	bool arcadeMario;
-protected:
+
 	SDL_Renderer* mRenderer;
 	Vector2D mPosition;
 	Texture2D* mTexture;
+	LevelMap* mCurrentLevelMap;
 
 public:
 	Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario);
@@ -44,21 +30,11 @@ public:
 
 	void AddVelocity(float deltaTime);
 	void AddGravity();
-	void SpeedCap();
-	void GroundCheck();
-	void MovementCheck();
-	void AddFriction();
-	void GetInput(SDL_Event e);
-	void JumpCheck(float deltaTime);
-	void ScreenSideCheck(bool arcadeMario);
-	void CancelJump();
-	void SetPosition(Vector2D newPosition);
-	Vector2D GetPosition();
-	Vector2D GetVelocity() { return mVelocity; }
-	Texture2D* GetTexture() { return mTexture; }
+	virtual void GroundCheck();
+	virtual void ScreenSideCheck();
 
-	Rect2D GetCollisionBox()
-	{
-		return Rect2D(mPosition.x, mPosition.y, mTexture->GetWidth(), mTexture->GetHeight());
-	}
+	bool isAlive;
+
+	Vector2D GetPosition() { return mPosition; }
+	Rect2D GetCollisionBox() { return Rect2D(mPosition.x, mPosition.y, mTexture->GetWidth(), mTexture->GetHeight()); }
 };
