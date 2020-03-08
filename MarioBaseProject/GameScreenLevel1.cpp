@@ -1,14 +1,21 @@
 #include "GameScreenLevel1.h"
-#include <iostream>
-#include "Texture2D.h"
 
 #define MARIO_POSITION_X = 64.0f
 #define MARIO_POSITION_Y = 330.0f
 
-GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer)
+GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, const char* text, SDL_Color color) : GameScreen(renderer, font, text, color)
 {
 	mLevelMap = NULL;
 	SetUpLevel();
+	spawnTime = SPAWN_TIME;
+	mScore = 0;
+	stringstream ss;
+	ss << mScore;
+	if (!(mSurface = TTF_RenderText_Solid(font, text, color)))
+	{
+		std::cout << "Text surface error." << std::endl;
+	}
+	mTextTexture = SDL_CreateTextureFromSurface(mRenderer, mSurface);
 }
 
 GameScreenLevel1::~GameScreenLevel1()
@@ -47,6 +54,7 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 	marioCharacter->Update(deltaTime, e);
 	UpdatePowBlock();
 	UpdateEnemies(deltaTime, e);
+	SpawnEnemies(deltaTime);
 }
 
 void GameScreenLevel1::Render()
@@ -64,6 +72,7 @@ void GameScreenLevel1::Render()
 	}
 	marioCharacter->Render();
 	mPowBlock->Render();
+	DrawText(Vector2D(64, 0));
 	/*for (unsigned int i = 0; i < MAP_HEIGHT; i++)
 	{
 		for (unsigned int j = 0; j < MAP_WIDTH; j++)
@@ -85,8 +94,8 @@ void GameScreenLevel1::SetLevelMap()
 										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 										{ 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0 },
 										{ 1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1 },
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 										{ 0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0 },
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 										{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1 },
 										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
@@ -111,7 +120,7 @@ bool GameScreenLevel1::SetUpLevel()
 	mBackgroundYPos = 0.0f;
 
 	//Player Characters
-	marioCharacter = new CharacterMario(mRenderer, "Images/Mario2.bmp", Vector2D(128, 200), mLevelMap, true);
+	marioCharacter = new CharacterMario(mRenderer, "Images/MarioAll.bmp", Vector2D(128, 200), mLevelMap, true);
 
 	//Background
 	mBackgroundTexture = new Texture2D(mRenderer);
@@ -125,19 +134,15 @@ bool GameScreenLevel1::SetUpLevel()
 	{
 		std::cout << "Failed to load brick texture.";
 	}*/
-
-	CreateKoopa(Vector2D(150, 64), FACING_RIGHT);
-	CreateKoopa(Vector2D(325, 64), FACING_LEFT);
 }
 
 void GameScreenLevel1::UpdatePowBlock()
 {
 	Rect2D mPowRect = mPowBlock->GetCollisionBox();
 	Rect2D mMarioRect = marioCharacter->GetCollisionBox();
-
 	if (CollisionsBox(mMarioRect, mPowRect))
 	{
-		if (mMarioRect.y > mPowRect.y+mPowRect.h/2 && marioCharacter->GetVelocity().y < 0 && mPowBlock->IsAvailable())
+		if (mMarioRect.y > mPowRect.y+mPowRect.h/2 && marioCharacter->GetVelocity().y <= 0 && mPowBlock->IsAvailable() && !mScreenShake)
 		{
 			DoScreenShake();
 			mPowBlock->TakeAHit();
@@ -151,24 +156,20 @@ void GameScreenLevel1::UpdateEnemies(float deltaTime, SDL_Event e)
 	if (!mEnemies.empty())
 	{
 		int enemyIndexToDelete = -1;
-		for (unsigned int i = 0; i < mEnemies.size(); i++)
+		for (unsigned int i = 0; i < mEnemies.size(); ++i)
 		{
 			mEnemies[i]->Update(deltaTime, e);
 
-			if ((mEnemies[i]->GetPosition().y > 300.0f || mEnemies[i]->GetPosition().y <= 64.0f) && (mEnemies[i]->GetPosition().y < 64.0f || mEnemies[i]->GetPosition().x > SCREEN_WIDTH-96.0f))
+			Rect2D mEnemyRect = mEnemies[i]->GetCollisionBox();
+			Rect2D mMarioRect = marioCharacter->GetCollisionBox();
+			if (mEnemies[i]->GetInjuredState() == false)
 			{
-				//Nothing.
-			}
-			else
-			{
-				Rect2D mEnemyRect = mEnemies[i]->GetCollisionBox();
-				Rect2D mMarioRect = marioCharacter->GetCollisionBox();
 				if (CollisionsBox(mMarioRect, mEnemyRect))
 				{
-					if (mMarioRect.y < mEnemyRect.y - MARIO_HEIGHT + mEnemyRect.h / 2 && mMarioRect.x >= mEnemyRect.x - 12 && mMarioRect.x <= mEnemyRect.x + MARIO_WIDTH - 4 && marioCharacter->GetVelocity().y > 0)
+					if (mMarioRect.y < mEnemyRect.y - MARIO_HEIGHT + mEnemyRect.h / 2 && mMarioRect.x >= mEnemyRect.x - 14 && mMarioRect.x <= mEnemyRect.x + MARIO_WIDTH - 2 && marioCharacter->GetVelocity().y > 0)
 					{
 						mEnemies[i]->isAlive = false;
-						marioCharacter->CancelJump();
+						marioCharacter->KoopaBounce(deltaTime);
 					}
 					else
 					{
@@ -176,13 +177,18 @@ void GameScreenLevel1::UpdateEnemies(float deltaTime, SDL_Event e)
 					}
 				}
 			}
-
-			if (!mEnemies[i]->isAlive)
+			else
+			{
+				if (CollisionsBox(mMarioRect, mEnemyRect))
+				{
+					mEnemies[i]->isAlive = false;
+				}
+			}
+			if (!mEnemies[i]->isAlive && enemyIndexToDelete == -1)
 			{
 				enemyIndexToDelete = i;
 			}
 		}
-
 		if (enemyIndexToDelete != -1)
 		{
 			mEnemies.erase(mEnemies.begin() + enemyIndexToDelete);
@@ -203,6 +209,44 @@ void GameScreenLevel1::DoScreenShake()
 
 void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction)
 {
-	CharacterKoopa* koopaCharacter = new CharacterKoopa(mRenderer, "Images/Koopa.bmp", position, mLevelMap, true, direction);
+	srand(time(0));
+	int randNum = rand() % 100 + 1;
+	COLOUR randType;
+	string path;
+	if (randNum <= 60)
+	{
+		randType = KOOPA_GREEN;
+		path = "Images/KoopaGreenAll.bmp";
+	}
+	if (randNum > 60 && randNum <= 90)
+	{
+		randType = KOOPA_RED;
+		path = "Images/KoopaRedAll.bmp";
+	}	
+	if (randNum > 90)
+	{
+		randType = KOOPA_PURPLE;
+		path = "Images/KoopaPurpleAll.bmp";
+	}
+	CharacterKoopa* koopaCharacter = new CharacterKoopa(mRenderer, path, position, mLevelMap, true, direction, randType);
 	mEnemies.push_back(koopaCharacter);
+}
+
+void GameScreenLevel1::SpawnEnemies(float deltaTime)
+{
+	spawnTime -= deltaTime;
+	if (spawnTime <= 0)
+	{
+		srand(time(0));
+		int randNum = rand() % 2;
+		if (randNum == 0)
+		{
+			CreateKoopa(Vector2D(-12, 32), FACING_RIGHT);
+		}
+		else
+		{
+			CreateKoopa(Vector2D(496, 32), FACING_LEFT);
+		}
+		spawnTime = SPAWN_TIME;
+	}
 }

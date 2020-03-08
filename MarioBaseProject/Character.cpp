@@ -35,8 +35,8 @@ void Character::Update(float deltaTime, SDL_Event e)
 
 void Character::AddVelocity(float deltaTime)
 {
-	mVelocity.x += mAccel.x;
-	mVelocity.y += mAccel.y;
+	mVelocity.x += mAccel.x * deltaTime;
+	mVelocity.y += mAccel.y * deltaTime;
 
 	mPosition.x += mVelocity.x * deltaTime;
 	mPosition.y += mVelocity.y * deltaTime;
@@ -60,12 +60,12 @@ void Character::GroundCheck()
 
 void Character::ScreenSideCheck()
 {
-	if (mPosition.x < -MARIO_WIDTH / 2)
+	if (mPosition.x < -MARIO_WIDTH * 0.5)
 	{
-		mPosition.x = 512 - MARIO_WIDTH / 2;
+		mPosition.x = 512 - MARIO_WIDTH * 0.5;
 	}
-	if (mPosition.x > 512 - MARIO_WIDTH / 2)
+	if (mPosition.x > 512 - MARIO_WIDTH * 0.5)
 	{
-		mPosition.x = -MARIO_WIDTH / 2;
+		mPosition.x = -MARIO_WIDTH * 0.5;
 	}
 }

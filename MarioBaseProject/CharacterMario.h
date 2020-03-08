@@ -19,7 +19,7 @@ public:
 
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
-	void SpeedCap();
+	void SpeedCap(float deltaTime);
 	void GroundCheck();
 	void MovementCheck();
 	void AddFriction();
@@ -27,6 +27,7 @@ public:
 	void JumpCheck(float deltaTime);
 	void CancelJump();
 	void SetPosition(Vector2D newPosition);
+	void KoopaBounce(float deltaTime);
 	Vector2D GetVelocity() { return mVelocity; }
 	Texture2D* GetTexture() { return mTexture; }
 };

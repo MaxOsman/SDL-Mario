@@ -2,15 +2,13 @@
 #include "GameScreen.h"
 #include "CharacterMario.h"
 #include "CharacterKoopa.h"
-#include "LevelMap.h"
 #include "PowBlock.h"
+#include "Texture2D.h"
 #include <vector>
+#include <time.h>
+#include <sstream>
 
 class Texture2D;
-//class Character;
-//class CharacterMario;
-//class CharacterKoopa;
-//class PowBlock;
 
 class GameScreenLevel1 : GameScreen
 {
@@ -28,30 +26,23 @@ private:
 	float mScreenShakeTime;
 	float mWobble;
 	float mBackgroundYPos;
+	float spawnTime;
+	int mScore;
 public:
-	GameScreenLevel1(SDL_Renderer* renderer);
+	GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, const char* text, SDL_Color color);
 	~GameScreenLevel1();
 
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
 	void SetLevelMap();
-	void UpdatePowBlock();
 
+	void UpdatePowBlock();
+	void SpawnEnemies(float deltaTime);
 	void UpdateEnemies(float DeltaTime, SDL_Event e);
 	void CreateKoopa(Vector2D position, FACING direction);
 
-	/*bool CollisionsBox(Rect2D rect1, Rect2D rect2)
-	{
-		if (rect1.x + (rect1.w / 2) >= rect2.x&&
-			rect1.x + (rect1.w / 2) <= rect2.x + rect2.w &&
-			rect1.y + (rect1.h / 2) >= rect2.y&&
-			rect1.y + (rect1.h / 2) <= rect2.y + rect2.h)
-		{
-			return true;
-		}
+	int GetScore() { return mScore; }
 
-		return false;
-	}*/
 	bool CollisionsBox(Rect2D rect1, Rect2D rect2)
 	{
 		if (rect1.y + rect1.h < rect2.y)

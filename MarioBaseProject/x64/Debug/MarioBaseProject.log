@@ -1,23 +1,7 @@
-﻿  CharacterMario.cpp
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\Character.h(39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(101): warning C4305: '-=': truncation from 'double' to 'float'
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(103): warning C4305: '+=': truncation from 'double' to 'float'
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(113): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(114): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(115): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(116): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(117): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(118): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(131): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(136): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(141): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(159): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\CharacterMario.cpp(161): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  GameScreenLevel1.cpp
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\Character.h(39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  GameScreenManager.cpp
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\Character.h(39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  ScreenGameOver.cpp
-  Generating Code...
-C:\Users\o010617j\Desktop\SDL-Mario8\MarioBaseProject\GameScreenLevel1.cpp(131): warning C4715: 'GameScreenLevel1::SetUpLevel': not all control paths return a value
-  MarioBaseProject.vcxproj -> C:\Users\o010617j\Desktop\SDL-Mario8\x64\Debug\MarioBaseProject.exe
+﻿  GameScreenLevel1.cpp
+D:\Uni\SDL-Mario8\MarioBaseProject\GameScreenLevel1.cpp(14,5): error C2440: 'type cast': cannot convert from 'overloaded-function' to 'char'
+D:\Uni\SDL-Mario8\MarioBaseProject\GameScreenLevel1.cpp(14,53): message : Context does not allow for disambiguation of overloaded function
+D:\Uni\SDL-Mario8\MarioBaseProject\GameScreenLevel1.cpp(14,5): error C2660: 'TTF_RenderText_Solid': function does not take 2 arguments
+D:\Uni\SDL-Mario8\MarioBaseProject\SDL2-2.0.10\include\SDL_ttf.h(181,39): message : see declaration of 'TTF_RenderText_Solid'
+D:\Uni\SDL-Mario8\MarioBaseProject\GameScreenLevel1.cpp(212,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\Uni\SDL-Mario8\MarioBaseProject\GameScreenLevel1.cpp(240,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data

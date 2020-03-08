@@ -16,6 +16,11 @@ protected:
 	Vector2D mAccel;
 	bool mIsGrounded;
 
+	float mWalkAnimationTime;
+	int leftOfTilesheet;
+	float mSingleSpriteWidth;
+	float mSingleSpriteHeight;
+
 	SDL_Renderer* mRenderer;
 	Vector2D mPosition;
 	Texture2D* mTexture;
@@ -36,5 +41,5 @@ public:
 	bool isAlive;
 
 	Vector2D GetPosition() { return mPosition; }
-	Rect2D GetCollisionBox() { return Rect2D(mPosition.x, mPosition.y, mTexture->GetWidth(), mTexture->GetHeight()); }
+	Rect2D GetCollisionBox() { return Rect2D(mPosition.x, mPosition.y, mSingleSpriteWidth, mSingleSpriteHeight); }
 };

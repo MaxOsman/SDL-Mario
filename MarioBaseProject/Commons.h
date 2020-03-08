@@ -16,6 +16,13 @@ enum FACING
 	FACING_RIGHT
 };
 
+enum COLOUR
+{
+	KOOPA_GREEN = 0,
+	KOOPA_RED,
+	KOOPA_PURPLE
+};
+
 struct Vector2D
 {
 	float x;

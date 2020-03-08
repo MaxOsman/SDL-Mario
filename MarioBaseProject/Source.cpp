@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include <SDL_ttf.h>
 //#include <SDL_image.h>
 //#include <SDL_mixer.h>
 #include "Texture2D.h"
@@ -6,13 +7,13 @@
 #include "Constants.h"
 #include <iostream>
 #include "GameScreenManager.h"
+using namespace std;
 
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 GameScreenManager* gameScreenManager;
 Uint32 gOldTime;
-
-using namespace std;
+TTF_Font* font;
 
 bool InitSDL();
 void CloseSDL();
@@ -24,7 +25,9 @@ int angle = 0;
 int main(int argc, char* args[])
 {
 	InitSDL();
-	gameScreenManager = new GameScreenManager(gRenderer, SCREEN_LEVEL1);
+	TTF_Init();
+	font = TTF_OpenFont("arial.ttf", 20);
+	gameScreenManager = new GameScreenManager(gRenderer, SCREEN_LEVEL1, font);
 	gOldTime = SDL_GetTicks();
 	bool quit = false;
 
@@ -49,7 +52,7 @@ bool InitSDL()
 	else
 	{
 		//Success
-		gWindow = SDL_CreateWindow("Mario", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		gWindow = SDL_CreateWindow("SDL Mario Bros", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 		{
 			cout << "Window was not created. Error: " << SDL_GetError();
@@ -70,6 +73,8 @@ void CloseSDL()
 	gameScreenManager = NULL;
 	gRenderer = NULL;
 	gWindow = NULL;
+	TTF_CloseFont(font);
+	TTF_Quit();
 	SDL_Quit();
 }
 

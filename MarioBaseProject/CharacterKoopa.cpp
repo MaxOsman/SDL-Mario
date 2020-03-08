@@ -1,12 +1,15 @@
 #include "CharacterKoopa.h"
 
-CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario, FACING direction) : Character(renderer, imagePath, startPosition, map, isArcadeMario)
+CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario, FACING direction, COLOUR type) : Character(renderer, imagePath, startPosition, map, isArcadeMario)
 {
-	mSingleSpriteWidth = mTexture->GetWidth() / 2;
+	mSingleSpriteWidth = mTexture->GetWidth() / 7;
 	mSingleSpriteHeight = mTexture->GetHeight();
 	mInjured = false;
 	isAlive = true;
 	mFacingDirection = direction;
+	mType = type;
+	mWalkAnimationTime = KOOPA_WALK_TIME;
+	leftOfTilesheet = 0;
 }
 
 CharacterKoopa::~CharacterKoopa()
@@ -16,9 +19,13 @@ CharacterKoopa::~CharacterKoopa()
 
 void CharacterKoopa::TakeDamage()
 {
+	if(mType == KOOPA_GREEN)
+		mInjuredTime = INJURED_TIME_GREEN;
+	else if (mType == KOOPA_RED)
+		mInjuredTime = INJURED_TIME_RED;
+	else
+		mInjuredTime = INJURED_TIME_PURPLE;
 	mInjured = true;
-	mInjuredTime = INJURED_TIME;
-	mVelocity.y = -KOOPA_HIT_JUMP_V;
 	mIsGrounded = false;
 }
 
@@ -29,18 +36,20 @@ void CharacterKoopa::FlipRightWayUp()
 	else
 		mFacingDirection = FACING_LEFT;
 	mInjured = false;
-	mVelocity.y = -KOOPA_HIT_JUMP_V;
 	mIsGrounded = false;
 }
 
 void CharacterKoopa::Render()
 {
-	int left = 0.0f;
-
 	if (mInjured)
-		left = mSingleSpriteWidth;
+		leftOfTilesheet = mSingleSpriteWidth * 5;
+	else
+	{
+		if (leftOfTilesheet == mSingleSpriteWidth * 5)
+			leftOfTilesheet = 0;
+	}
 
-	SDL_Rect portionOfSpriteSheet = {left, 0, mSingleSpriteWidth, mSingleSpriteHeight};
+	SDL_Rect portionOfSpriteSheet = { leftOfTilesheet, 0, mSingleSpriteWidth, mSingleSpriteHeight};
 	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
 
 	if (mFacingDirection == FACING_RIGHT)
@@ -60,14 +69,36 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 		{
 			mMovingLeft = true;
 			mMovingRight = false;
-			mVelocity.x = -KOOPA_SPEED;
+			if (mType == KOOPA_GREEN)
+				mVelocity.x = -KOOPA_GREEN_SPEED;
+			else if (mType == KOOPA_RED)
+				mVelocity.x = -KOOPA_RED_SPEED;
+			else
+				mVelocity.x = -KOOPA_PURPLE_SPEED;
 		}
 		else if (mFacingDirection == FACING_RIGHT)
 		{
 			mMovingLeft = false;
 			mMovingRight = true;
-			mVelocity.x = KOOPA_SPEED;
+			if (mType == KOOPA_GREEN)
+				mVelocity.x = KOOPA_GREEN_SPEED;
+			else if (mType == KOOPA_RED)
+				mVelocity.x = KOOPA_RED_SPEED;
+			else
+				mVelocity.x = KOOPA_PURPLE_SPEED;
 		}
+
+		mWalkAnimationTime -= deltaTime;
+		if (mWalkAnimationTime <= 0 && leftOfTilesheet < 4 * mSingleSpriteWidth)
+		{
+			leftOfTilesheet += mSingleSpriteWidth;
+			mWalkAnimationTime = KOOPA_WALK_TIME;
+		}
+		else if(mWalkAnimationTime <= 0 && leftOfTilesheet >= 4 * mSingleSpriteWidth)
+		{
+			leftOfTilesheet = 0;
+			mWalkAnimationTime = KOOPA_WALK_TIME;
+		}	
 	}
 	else
 	{
@@ -82,9 +113,9 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 
 void CharacterKoopa::GroundCheck()
 {
-	centralXPosition = (int)(mPosition.x + (mTexture->GetWidth() * 0.25f)) / mSingleSpriteWidth;
+	centralXPosition = (int)(mPosition.x + (mSingleSpriteWidth * 0.5f)) / mSingleSpriteWidth;
 	leftXPosition = (int)mPosition.x / mSingleSpriteWidth;
-	rightXPosition = (int)(mPosition.x + (mTexture->GetWidth() * 0.5f)-1) / mSingleSpriteWidth;
+	rightXPosition = (int)(mPosition.x + mSingleSpriteWidth) / mSingleSpriteWidth;
 	footPosition = (int)(mPosition.y + mTexture->GetHeight()) / mSingleSpriteWidth;
 	headPosition = (int)mPosition.y / mSingleSpriteWidth;
 	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == 1)
@@ -99,35 +130,36 @@ void CharacterKoopa::GroundCheck()
 		mIsGrounded = false;
 	}
 
-	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == 1)
+	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == 1 && mVelocity.y < 0)
 	{
 		mPosition.y = (headPosition + 1) * mSingleSpriteWidth;
+		mVelocity.y = 0;
 	}
-	else if (mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == 1)
+	else if (mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == 1 && mCurrentLevelMap->GetTileAt(footPosition - 1, leftXPosition) == 1)
 	{
-		mPosition.x = (leftXPosition + 1) * mSingleSpriteWidth;
+		mPosition.x = (leftXPosition + 1) * mSingleSpriteWidth - 31;
 		mVelocity.x = 0;
 	}
-	else if (mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == 1)
+	else if (mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == 1 && mCurrentLevelMap->GetTileAt(footPosition - 1, rightXPosition) == 1)
 	{
-		mPosition.x = (rightXPosition - 1) * mSingleSpriteWidth;
+		mPosition.x = (rightXPosition - 1) * mSingleSpriteWidth - 1;
 		mVelocity.x = 0;
 	}
 }
 
 void CharacterKoopa::ScreenSideCheck()
 {
-	if (mPosition.x < -mSingleSpriteWidth / 2)
+	if (mPosition.x < -mSingleSpriteWidth * 0.5)
 	{
-		mPosition.x = 512 - mSingleSpriteWidth / 2;
+		mPosition.x = 512 - mSingleSpriteWidth * 0.5;
 		if (GetPosition().y > 300.0f)
 		{
 			isAlive = false;
 		}
 	}
-	if (mPosition.x > 512 - mSingleSpriteWidth / 2)
+	if (mPosition.x > 512 - mSingleSpriteWidth * 0.5)
 	{
-		mPosition.x = -mSingleSpriteWidth / 2;
+		mPosition.x = -mSingleSpriteWidth * 0.5;
 		if (GetPosition().y > 300.0f)
 		{
 			isAlive = false;

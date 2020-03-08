@@ -4,15 +4,14 @@
 class CharacterKoopa : public Character
 {
 private:
-	float mSingleSpriteWidth;
-	float mSingleSpriteHeight;
-
 	bool mInjured;
 	float mInjuredTime;
 
 	void FlipRightWayUp();
+
+	int mType;
 public:
-	CharacterKoopa(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario, FACING direction);
+	CharacterKoopa(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario, FACING direction, COLOUR type);
 	~CharacterKoopa();
 
 	void GroundCheck();
@@ -20,4 +19,5 @@ public:
 	void Update(float deltaTime, SDL_Event e);
 	void TakeDamage();
 	void ScreenSideCheck();
+	bool GetInjuredState() { return mInjured; }
 };
