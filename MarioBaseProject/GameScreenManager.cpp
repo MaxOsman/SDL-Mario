@@ -42,10 +42,11 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 	switch (newScreen)
 	{
 	case SCREEN_LEVEL1:
-		tempScreen = new GameScreenLevel1(mRenderer, mFont, "Score: ", {255, 64, 64});
+		tempScreen = new GameScreenLevel1(mRenderer, mFont, { 255, 64, 64 });
 		mCurrentScreen = (GameScreen*)tempScreen;
 		tempScreen = NULL;
 		delete tempScreen;
+		//mCurrentScreen->ImportText(mFont, (string("Score: ") + oss.str()).c_str(), { 255, 64, 64 });
 		break;
 
 	}

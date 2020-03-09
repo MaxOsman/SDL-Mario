@@ -1,7 +1,5 @@
 ﻿  GameScreenLevel1.cpp
-D:\Uni\SDL-Mario8\MarioBaseProject\GameScreenLevel1.cpp(14,5): error C2440: 'type cast': cannot convert from 'overloaded-function' to 'char'
-D:\Uni\SDL-Mario8\MarioBaseProject\GameScreenLevel1.cpp(14,53): message : Context does not allow for disambiguation of overloaded function
-D:\Uni\SDL-Mario8\MarioBaseProject\GameScreenLevel1.cpp(14,5): error C2660: 'TTF_RenderText_Solid': function does not take 2 arguments
-D:\Uni\SDL-Mario8\MarioBaseProject\SDL2-2.0.10\include\SDL_ttf.h(181,39): message : see declaration of 'TTF_RenderText_Solid'
-D:\Uni\SDL-Mario8\MarioBaseProject\GameScreenLevel1.cpp(212,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario8\MarioBaseProject\GameScreenLevel1.cpp(240,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario9\MarioBaseProject\GameScreenLevel1.cpp(230): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario9\MarioBaseProject\GameScreenLevel1.cpp(258): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario9\MarioBaseProject\GameScreenLevel1.cpp(143): warning C4715: 'GameScreenLevel1::SetUpLevel': not all control paths return a value
+  MarioBaseProject.vcxproj -> C:\Users\o010617j\Desktop\SDL-Mario9\x64\Debug\MarioBaseProject.exe

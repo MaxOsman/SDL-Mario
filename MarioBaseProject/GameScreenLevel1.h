@@ -21,6 +21,7 @@ private:
 	//Character* luigiCharacter;
 	PowBlock* mPowBlock;
 	vector<CharacterKoopa*> mEnemies;
+	ostringstream oss;
 
 	bool mScreenShake;
 	float mScreenShakeTime;
@@ -29,12 +30,13 @@ private:
 	float spawnTime;
 	int mScore;
 public:
-	GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, const char* text, SDL_Color color);
+	GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color);
 	~GameScreenLevel1();
 
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
 	void SetLevelMap();
+	void ImportText(const char* text);
 
 	void UpdatePowBlock();
 	void SpawnEnemies(float deltaTime);

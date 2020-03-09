@@ -9,7 +9,7 @@ private:
 
 	void FlipRightWayUp();
 
-	int mType;
+	COLOUR mType;
 public:
 	CharacterKoopa(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario, FACING direction, COLOUR type);
 	~CharacterKoopa();
@@ -20,4 +20,5 @@ public:
 	void TakeDamage();
 	void ScreenSideCheck();
 	bool GetInjuredState() { return mInjured; }
+	COLOUR GetType() { return mType; }
 };

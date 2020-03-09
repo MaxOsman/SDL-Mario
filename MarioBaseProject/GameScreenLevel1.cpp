@@ -3,19 +3,12 @@
 #define MARIO_POSITION_X = 64.0f
 #define MARIO_POSITION_Y = 330.0f
 
-GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, const char* text, SDL_Color color) : GameScreen(renderer, font, text, color)
+GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color) : GameScreen(renderer, font, color)
 {
 	mLevelMap = NULL;
 	SetUpLevel();
 	spawnTime = SPAWN_TIME;
 	mScore = 0;
-	stringstream ss;
-	ss << mScore;
-	if (!(mSurface = TTF_RenderText_Solid(font, text, color)))
-	{
-		std::cout << "Text surface error." << std::endl;
-	}
-	mTextTexture = SDL_CreateTextureFromSurface(mRenderer, mSurface);
 }
 
 GameScreenLevel1::~GameScreenLevel1()
@@ -35,6 +28,15 @@ GameScreenLevel1::~GameScreenLevel1()
 	mEnemies.clear();
 	delete mLevelMap;
 	mLevelMap = NULL;
+}
+
+void GameScreenLevel1::ImportText(const char* text)
+{
+	if (!(mSurface = TTF_RenderText_Shaded(mFont, text, mColor, { 0, 0, 0 })))
+	{
+		std::cout << "Text surface error." << std::endl;
+	}
+	mTextTexture = SDL_CreateTextureFromSurface(mRenderer, mSurface);
 }
 
 void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
@@ -72,7 +74,11 @@ void GameScreenLevel1::Render()
 	}
 	marioCharacter->Render();
 	mPowBlock->Render();
-	DrawText(Vector2D(64, 0));
+
+	oss.str(string());
+	oss << mScore;
+	ImportText((string("Score: ") + oss.str()).c_str());
+	DrawText(Vector2D(0, 0));
 	/*for (unsigned int i = 0; i < MAP_HEIGHT; i++)
 	{
 		for (unsigned int j = 0; j < MAP_WIDTH; j++)
@@ -170,6 +176,12 @@ void GameScreenLevel1::UpdateEnemies(float deltaTime, SDL_Event e)
 					{
 						mEnemies[i]->isAlive = false;
 						marioCharacter->KoopaBounce(deltaTime);
+						if (mEnemies[i]->GetType() == KOOPA_GREEN)
+							mScore++;
+						if (mEnemies[i]->GetType() == KOOPA_RED)
+							mScore += 2;
+						if (mEnemies[i]->GetType() == KOOPA_PURPLE)
+							mScore += 3;
 					}
 					else
 					{
@@ -182,6 +194,12 @@ void GameScreenLevel1::UpdateEnemies(float deltaTime, SDL_Event e)
 				if (CollisionsBox(mMarioRect, mEnemyRect))
 				{
 					mEnemies[i]->isAlive = false;
+					if (mEnemies[i]->GetType() == KOOPA_GREEN)
+						mScore++;
+					if (mEnemies[i]->GetType() == KOOPA_RED)
+						mScore += 2;
+					if (mEnemies[i]->GetType() == KOOPA_PURPLE)
+						mScore += 3;
 				}
 			}
 			if (!mEnemies[i]->isAlive && enemyIndexToDelete == -1)
