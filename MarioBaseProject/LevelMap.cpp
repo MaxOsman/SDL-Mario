@@ -9,6 +9,30 @@ LevelMap::LevelMap(char map[MAP_HEIGHT][MAP_WIDTH])
 	}
 }
 
+LevelMap::LevelMap(char map[MAP_HEIGHT][MAP_WIDTH], string path2, string path3, string path4, SDL_Renderer* renderer)
+{
+	mMap = new char* [MAP_HEIGHT];
+	for (unsigned char i = 0; i < MAP_HEIGHT; i++)
+	{
+		mMap[i] = new char[MAP_WIDTH];
+	}
+	m2Texture = new Texture2D(renderer);
+	if (!m2Texture->LoadFromFile(path2))
+	{
+		std::cout << "Failed to load texture 2.";
+	}
+	m3Texture = new Texture2D(renderer);
+	if (!m3Texture->LoadFromFile(path3))
+	{
+		std::cout << "Failed to load texture 3.";
+	}
+	m4Texture = new Texture2D(renderer);
+	if (!m4Texture->LoadFromFile(path4))
+	{
+		std::cout << "Failed to load texture 4.";
+	}
+}
+
 LevelMap::~LevelMap()
 {
 	for (unsigned int i = 0; i < MAP_HEIGHT; i++)
@@ -16,6 +40,9 @@ LevelMap::~LevelMap()
 		delete[] mMap[i];
 	}
 	delete[] mMap;
+	delete m2Texture;
+	delete m3Texture;
+	delete m4Texture;
 }
 
 char LevelMap::GetTileAt(unsigned int h, unsigned int w)
@@ -72,8 +99,18 @@ void LevelMap::LoadMapFromFile(int levelName)
 	delete lines;
 }
 
-/*void LevelMap::Render(float x, float y, SDL_Renderer* renderer)
+void LevelMap::Render()
 {
-	Vector2D tempPosition(x * 32, y * 32);
-	brickTexture->Render(tempPosition, SDL_FLIP_NONE);
-}*/
+	for (unsigned int i = 0; i < MAP_HEIGHT; i++)
+	{
+		for (unsigned int j = 0; j < MAP_WIDTH; j++)
+		{
+			if (GetTileAt(i, j) == '2')
+				m2Texture->Render(Vector2D(j * 32, i * 32), SDL_FLIP_NONE);
+			if (GetTileAt(i, j) == '3')
+				m3Texture->Render(Vector2D(j * 32, i * 32), SDL_FLIP_NONE);
+			if (GetTileAt(i, j) == '4')
+				m4Texture->Render(Vector2D(j * 32, i * 32), SDL_FLIP_NONE);
+		}
+	}
+}

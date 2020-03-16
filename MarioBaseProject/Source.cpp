@@ -30,13 +30,8 @@ int main(int argc, char* args[])
 	{
 		cout << "Music Load Error!" << endl;
 	} 
-	Mix_Music* mGusic = Mix_LoadMUS("Mario.mp3");
-	if (Mix_PlayingMusic() == 0)
-	{
-		Mix_PlayMusic(mGusic, -1);
-	}
 	font = TTF_OpenFont("arial.ttf", 20);
-	gameScreenManager = new GameScreenManager(gRenderer, SCREEN_LEVEL1, font);
+	gameScreenManager = new GameScreenManager(gRenderer, SCREEN_LEVEL2, font);
 	gOldTime = SDL_GetTicks();
 	bool quit = false;
 

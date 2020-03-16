@@ -15,7 +15,7 @@ void GameScreenBeat1::Render()
 	SDL_SetRenderDrawColor(mRenderer, 0x00, 0x00, 0x00, 0x00);
 	SDL_RenderClear(mRenderer);
 
-	ImportText((string("Level 1 Complete! Only one more to go!")).c_str());
+	ImportText((string("Level 1 Complete! Press Space to continue!")).c_str());
 	DrawText(Vector2D(SCREEN_WIDTH/5, SCREEN_HEIGHT/2));
 
 	SDL_RenderPresent(mRenderer);

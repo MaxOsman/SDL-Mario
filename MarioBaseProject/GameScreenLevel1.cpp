@@ -1,8 +1,5 @@
 #include "GameScreenLevel1.h"
 
-#define MARIO_POSITION_X = 64.0f
-#define MARIO_POSITION_Y = 330.0f
-
 GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color) : GameScreen(renderer, font, color)
 {
 	mLevelMap = NULL;
@@ -31,8 +28,6 @@ GameScreenLevel1::~GameScreenLevel1()
 {
 	delete mBackgroundTexture;
 	mBackgroundTexture = NULL;
-	/*delete brickTexture;
-	brickTexture = NULL;*/
 	delete marioCharacter;
 	marioCharacter = NULL;
 	delete mPowBlock;
@@ -106,14 +101,6 @@ void GameScreenLevel1::Render()
 	oss2 << mTime;
 	ImportText((string("Score: ") + oss.str() + "    " + string("Time: ") + oss2.str()).c_str());
 	DrawText(Vector2D(0, 0));
-	/*for (unsigned int i = 0; i < MAP_HEIGHT; i++)
-	{
-		for (unsigned int j = 0; j < MAP_WIDTH; j++)
-		{
-			if(mLevelMap->GetTileAt(i, j) != 0)
-				brickTexture->Render(Vector2D(j * 32, i * 32), SDL_FLIP_NONE);
-		}
-	}*/
 
 	SDL_RenderPresent(mRenderer);
 }
@@ -152,11 +139,6 @@ bool GameScreenLevel1::SetUpLevel()
 		std::cout << "Failed to load background texture.";
 		return false;
 	}
-	/*brickTexture = new Texture2D(mRenderer);
-	if (!brickTexture->LoadFromFile("Images/brick.bmp"))
-	{
-		std::cout << "Failed to load brick texture.";
-	}*/
 }
 
 void GameScreenLevel1::UpdatePowBlock()
@@ -278,20 +260,20 @@ void GameScreenLevel1::DoScreenShake()
 void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction)
 {
 	srand(time(0));
-	int randNum = rand() % 100 + 1;
+	int randNum = rand() % 10 + 1;
 	COLOUR randType;
 	string path;
-	if (randNum <= 60)
+	if (randNum <= 6)
 	{
 		randType = KOOPA_GREEN;
 		path = "Images/KoopaGreenAll.bmp";
 	}
-	if (randNum > 60 && randNum <= 90)
+	if (randNum > 6 && randNum <= 9)
 	{
 		randType = KOOPA_RED;
 		path = "Images/KoopaRedAll.bmp";
 	}	
-	if (randNum > 90)
+	if (randNum > 9)
 	{
 		randType = KOOPA_PURPLE;
 		path = "Images/KoopaPurpleAll.bmp";

@@ -1,8 +1,10 @@
 #include "GameScreenManager.h"
 #include "GameScreen.h"
 #include "GameScreenLevel1.h"
+#include "GameScreenLevel2.h"
 #include "GameScreenGameOver.h"
 #include "GameScreenBeat1.h"
+#include "GameScreenIntro.h"
 
 GameScreenManager::GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen, TTF_Font* font)
 {
@@ -49,6 +51,14 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 		delete tempScreen1;
 		break;
 
+	case SCREEN_LEVEL2:
+		GameScreenLevel2* tempScreen2;
+		tempScreen2 = new GameScreenLevel2(mRenderer, mFont, { 255, 255, 255 });
+		mCurrentScreen = (GameScreen*)tempScreen2;
+		tempScreen2 = NULL;
+		delete tempScreen2;
+		break;
+
 	case SCREEN_GAMEOVER:
 		GameScreenGameOver* tempScreenG;
 		tempScreenG = new GameScreenGameOver(mRenderer, mFont, { 255, 64, 64 });
@@ -63,6 +73,14 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 		mCurrentScreen = (GameScreen*)tempScreenB1;
 		tempScreenB1 = NULL;
 		delete tempScreenB1;
+		break;
+
+	case SCREEN_INTRO:
+		GameScreenIntro* tempScreenI;
+		tempScreenI = new GameScreenIntro(mRenderer, mFont, { 255, 255, 255 });
+		mCurrentScreen = (GameScreen*)tempScreenI;
+		tempScreenI = NULL;
+		delete tempScreenI;
 		break;
 	}
 }

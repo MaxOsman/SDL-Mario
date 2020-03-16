@@ -1,33 +1,21 @@
 ﻿  CharacterMario.cpp
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(10,44): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(11,43): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(38,56): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(38,56): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(38,76): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(38,76): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(39,64): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(39,64): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(39,84): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(39,84): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(117,70): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(118,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(119,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(120,58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(121,34): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(122,48): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(122,34): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(135,48): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(135,34): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(141,53): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(141,39): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(141,124): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(141,119): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(146,53): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(146,39): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(146,125): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(146,120): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(166,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(168,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(287,41): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-D:\Uni\SDL-Mario9_\MarioBaseProject\CharacterMario.cpp(295,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  MarioBaseProject.vcxproj -> D:\Uni\SDL-Mario9_\x64\Debug\MarioBaseProject.exe
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(38): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(39): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(39): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(117): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(118): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(119): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(120): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(121): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(122): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(135): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(141): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(146): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(166): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(168): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(287): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\o010617j\Desktop\SDL-Mario10\MarioBaseProject\CharacterMario.cpp(295): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  MarioBaseProject.vcxproj -> C:\Users\o010617j\Desktop\SDL-Mario10\x64\Debug\MarioBaseProject.exe

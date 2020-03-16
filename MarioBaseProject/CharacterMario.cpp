@@ -116,10 +116,10 @@ void CharacterMario::GroundCheck()
 {
 	centralXPosition = (int)(mPosition.x + (mSingleSpriteWidth * 0.5f)) / TILE_WIDTH;
 	leftXPosition = (int)mPosition.x / TILE_WIDTH;
-	rightXPosition = (int)(mPosition.x + mSingleSpriteWidth) / TILE_WIDTH;
+	rightXPosition = (int)(mPosition.x + mSingleSpriteWidth-1) / TILE_WIDTH;
 	footPosition = (int)(mPosition.y + mSingleSpriteHeight) / TILE_WIDTH;
 	headPosition = (int)mPosition.y / TILE_WIDTH;
-	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == '1' && mIsJumping == false)
+	if ((mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == '1' || mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == '2' || mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == '3' || mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == '4') && mIsJumping == false)
 	{
 		mPosition.y = (footPosition - 1) * TILE_WIDTH;
 		mIsGrounded = true;
@@ -132,18 +132,18 @@ void CharacterMario::GroundCheck()
 		mIsGrounded = false;
 	}
 
-	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '1')
+	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '1' || mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '2' || mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '3' || mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '4')
 	{
 		mPosition.y = (headPosition + 1) * TILE_WIDTH;
 		mSounds->Play(SOUND_BUMP);
 		CancelJump();
 	}
-	else if (mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == '1' && mCurrentLevelMap->GetTileAt(footPosition - 1, leftXPosition) == 1)
+	else if ((mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == '1' || mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == '2' || mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == '3' || mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == '4') && (mCurrentLevelMap->GetTileAt(footPosition - 1, leftXPosition) == '1' || mCurrentLevelMap->GetTileAt(footPosition - 1, leftXPosition) == '2' || mCurrentLevelMap->GetTileAt(footPosition - 1, leftXPosition) == '3' || mCurrentLevelMap->GetTileAt(footPosition - 1, leftXPosition) == '4'))
 	{
 		mPosition.x = (leftXPosition + 1) * TILE_WIDTH;
 		mVelocity.x = 0;
 	}
-	else if (mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == '1' && mCurrentLevelMap->GetTileAt(footPosition - 1, rightXPosition) == 1)
+	else if ((mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == '1' || mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == '2' || mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == '3' || mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == '4') && (mCurrentLevelMap->GetTileAt(footPosition - 1, rightXPosition) == '1' || mCurrentLevelMap->GetTileAt(footPosition - 1, rightXPosition) == '2' || mCurrentLevelMap->GetTileAt(footPosition - 1, rightXPosition) == '3' || mCurrentLevelMap->GetTileAt(footPosition - 1, rightXPosition) == '4'))
 	{
 		mPosition.x = (rightXPosition - 1) * TILE_WIDTH;
 		mVelocity.x = 0;
@@ -203,7 +203,7 @@ void CharacterMario::AddFriction()
 			mAccel.x = -MARIO_GROUND_FRICTION_A * 2;
 		}
 
-		if (mVelocity.x > -0.02 && mVelocity.x < 0.02)
+		if (mVelocity.x > -0.75 && mVelocity.x < 0.75 && !mMovingLeft && !mMovingRight)
 		{
 			mVelocity.x = 0;
 			mAccel.x = 0;
