@@ -29,7 +29,12 @@
 #define KOOPA_WALK_TIME 0.15f
 #define KOOPA_DIE_TIME 0.5f
 
-#define SPAWN_TIME 5.0f
+#define KOOPA_SPAWN_TIME 5.0f
+#define COIN_SPAWN_TIME 12.0f
+#define COIN_RADIUS 11.0f
+
+#define COIN_ANIMATION_TIME 0.1f
+#define COIN_MOVE_SPEED 100.0f
 
 #define MARIO_WIDTH 32
 #define MARIO_HEIGHT 32

@@ -1,6 +1,6 @@
 #include "Character.h"
 
-Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario)
+Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map)
 {
 	mPosition = startPosition;
 	mFacingDirection = FACING_RIGHT;
@@ -12,6 +12,13 @@ Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D startPos
 	}
 	mIsGrounded = false;
 	mCurrentLevelMap = map;
+	isAlive = true;
+}
+
+Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, SoundEffect* sounds)
+{
+	Character(renderer, imagePath, startPosition, map);
+	mSounds = sounds;
 }
 
 Character::~Character()

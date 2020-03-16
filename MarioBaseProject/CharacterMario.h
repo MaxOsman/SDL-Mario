@@ -14,7 +14,7 @@ private:
 	float mJumpTime;
 
 public:
-	CharacterMario(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario);
+	CharacterMario(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, SoundEffect* sounds);
 	~CharacterMario();
 
 	void Render();
@@ -28,6 +28,7 @@ public:
 	void CancelJump();
 	void SetPosition(Vector2D newPosition);
 	void KoopaBounce(float deltaTime);
+	void UpdateAnimation();
 	Vector2D GetVelocity() { return mVelocity; }
 	Texture2D* GetTexture() { return mTexture; }
 };

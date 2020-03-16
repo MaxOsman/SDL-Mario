@@ -6,15 +6,17 @@ GameScreen::GameScreen(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
 	mFont = font;
 	mColor = color;
 	mSurface = nullptr;
+	mNextScreen = SCREEN_NULL;
+	mSounds = new SoundEffect;
 }
 
 GameScreen::~GameScreen()
 {
-	delete mTextPosition;
-	SDL_DestroyTexture(mTextTexture);
-	SDL_FreeSurface(mSurface);
+	//SDL_DestroyTexture(mTextTexture);
+	//SDL_FreeSurface(mSurface);
 	mFont = NULL;
 	mRenderer = NULL;
+	delete mSounds;
 }
 
 void GameScreen::Update(float deltaTime, SDL_Event e)
@@ -39,7 +41,12 @@ void GameScreen::DrawText(Vector2D position)
 	SDL_FreeSurface(mSurface);
 }
 
-void GameScreen::ImportText(TTF_Font* font, const char* text, SDL_Color color)
+void GameScreen::ImportText(TTF_Font* font)
 {
 	
+}
+
+void GameScreen::TimeCountdown(float deltaTime)
+{
+
 }

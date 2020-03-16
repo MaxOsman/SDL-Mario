@@ -2,8 +2,10 @@
 #include "GameScreen.h"
 #include "CharacterMario.h"
 #include "CharacterKoopa.h"
+#include "CharacterCoin.h"
 #include "PowBlock.h"
 #include "Texture2D.h"
+#include "Collisions.h"
 #include <vector>
 #include <time.h>
 #include <sstream>
@@ -21,13 +23,18 @@ private:
 	//Character* luigiCharacter;
 	PowBlock* mPowBlock;
 	vector<CharacterKoopa*> mEnemies;
+	vector<CharacterCoin*> mCoins;
 	ostringstream oss;
+	ostringstream oss2;
+	Collisions mCollisions;
+	Mix_Music* mGusic;
 
 	bool mScreenShake;
 	float mScreenShakeTime;
 	float mWobble;
 	float mBackgroundYPos;
-	float spawnTime;
+	float koopaSpawnTime;
+	float coinSpawnTime;
 	int mScore;
 public:
 	GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color);
@@ -40,24 +47,15 @@ public:
 
 	void UpdatePowBlock();
 	void SpawnEnemies(float deltaTime);
-	void UpdateEnemies(float DeltaTime, SDL_Event e);
+	void SpawnCoins(float deltaTime);
+	void UpdateEnemies(float deltaTime, SDL_Event e);
+	void UpdateCoins(float deltaTime, SDL_Event e);
 	void CreateKoopa(Vector2D position, FACING direction);
+	void CreateCoin(Vector2D position, FACING direction);
+	void KillMarioCheck();
+	void TimeCountdown(float deltaTime);
 
 	int GetScore() { return mScore; }
-
-	bool CollisionsBox(Rect2D rect1, Rect2D rect2)
-	{
-		if (rect1.y + rect1.h < rect2.y)
-			return false;
-		if (rect1.y > rect2.y + rect2.h)
-			return false;
-		if (rect1.x + rect1.w < rect2.x)
-			return false;
-		if (rect1.x > rect2.x + rect2.w)
-			return false;
-
-		return true;
-	}
 
 	LevelMap* mLevelMap;
 };

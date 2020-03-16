@@ -1,0 +1,10 @@
+Sound loading based on tutorial by CodingMadeEasy
+Sounds:
+	Jump by coby12388
+	Coin by ProjectsU012
+	Bump by Raclure
+	Stomp by Mrthenoronha
+	Death by Fupicat
+	Pow by n_audioman
+	(From Freesound.org)
+	Music by Koji Kondo/Nintendo

@@ -1,17 +1,21 @@
 #pragma once
 #include "Constants.h"
 #include "Texture2D.h"
+#include <fstream>
+#include <vector>
+#include <sstream>
 
 class LevelMap
 {
 public:
-	LevelMap(int map[MAP_HEIGHT][MAP_WIDTH]);
+	LevelMap(char map[MAP_HEIGHT][MAP_WIDTH]);
 	~LevelMap();
 	//void Render(float x, float y, SDL_Renderer* renderer);
-	int GetTileAt(unsigned int h, unsigned int w);
+	char GetTileAt(unsigned int h, unsigned int w);
 	void ChangeTileAt(unsigned int row, unsigned int column, unsigned int newValue);
+	void LoadMapFromFile(int levelName);
 
 private:
-	int** mMap;
+	char** mMap;
 	//SDL_Renderer* mRenderer;
 };

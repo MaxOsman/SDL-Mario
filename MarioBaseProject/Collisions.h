@@ -1,5 +1,4 @@
 #pragma once
-#include <vector>
 #include "SDL.h"
 #include "Commons.h"
 
@@ -11,11 +10,9 @@ public:
 	~Collisions();
 	Collisions();
 
-	static Collisions* Instance();
-
-	bool Pixel();
+	bool Circle(Vector2D center1, Vector2D center2, float radius);
 	bool Box(Rect2D rect1, Rect2D rect2);
 
 private:
-	static Collisions* mInstance;
+	
 };

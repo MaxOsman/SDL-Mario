@@ -11,7 +11,7 @@ private:
 
 	COLOUR mType;
 public:
-	CharacterKoopa(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario, FACING direction, COLOUR type);
+	CharacterKoopa(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, FACING direction, COLOUR type);
 	~CharacterKoopa();
 
 	void GroundCheck();
@@ -19,6 +19,7 @@ public:
 	void Update(float deltaTime, SDL_Event e);
 	void TakeDamage();
 	void ScreenSideCheck();
+
 	bool GetInjuredState() { return mInjured; }
 	COLOUR GetType() { return mType; }
 };

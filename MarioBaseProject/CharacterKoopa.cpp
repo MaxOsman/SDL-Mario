@@ -1,6 +1,8 @@
 #include "CharacterKoopa.h"
+#include "CharacterKoopa.h"
+#include "CharacterKoopa.h"
 
-CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario, FACING direction, COLOUR type) : Character(renderer, imagePath, startPosition, map, isArcadeMario)
+CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, FACING direction, COLOUR type) : Character(renderer, imagePath, startPosition, map)
 {
 	mSingleSpriteWidth = mTexture->GetWidth() / 7;
 	mSingleSpriteHeight = mTexture->GetHeight();
@@ -118,7 +120,7 @@ void CharacterKoopa::GroundCheck()
 	rightXPosition = (int)(mPosition.x + mSingleSpriteWidth) / mSingleSpriteWidth;
 	footPosition = (int)(mPosition.y + mTexture->GetHeight()) / mSingleSpriteWidth;
 	headPosition = (int)mPosition.y / mSingleSpriteWidth;
-	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == 1)
+	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == '1')
 	{
 		mPosition.y = (footPosition - 1) * mSingleSpriteWidth;
 		mIsGrounded = true;
@@ -130,17 +132,17 @@ void CharacterKoopa::GroundCheck()
 		mIsGrounded = false;
 	}
 
-	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == 1 && mVelocity.y < 0)
+	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '1' && mVelocity.y < 0)
 	{
 		mPosition.y = (headPosition + 1) * mSingleSpriteWidth;
 		mVelocity.y = 0;
 	}
-	else if (mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == 1 && mCurrentLevelMap->GetTileAt(footPosition - 1, leftXPosition) == 1)
+	else if (mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == '1' && mCurrentLevelMap->GetTileAt(footPosition - 1, leftXPosition) == 1)
 	{
 		mPosition.x = (leftXPosition + 1) * mSingleSpriteWidth - 31;
 		mVelocity.x = 0;
 	}
-	else if (mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == 1 && mCurrentLevelMap->GetTileAt(footPosition - 1, rightXPosition) == 1)
+	else if (mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == '1' && mCurrentLevelMap->GetTileAt(footPosition - 1, rightXPosition) == 1)
 	{
 		mPosition.x = (rightXPosition - 1) * mSingleSpriteWidth - 1;
 		mVelocity.x = 0;

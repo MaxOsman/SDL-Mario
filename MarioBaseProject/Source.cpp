@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 //#include <SDL_image.h>
-//#include <SDL_mixer.h>
+#include <SDL_mixer.h>
 #include "Texture2D.h"
 #include "Commons.h"
 #include "Constants.h"
@@ -26,6 +26,15 @@ int main(int argc, char* args[])
 {
 	InitSDL();
 	TTF_Init();
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		cout << "Music Load Error!" << endl;
+	} 
+	Mix_Music* mGusic = Mix_LoadMUS("Mario.mp3");
+	if (Mix_PlayingMusic() == 0)
+	{
+		Mix_PlayMusic(mGusic, -1);
+	}
 	font = TTF_OpenFont("arial.ttf", 20);
 	gameScreenManager = new GameScreenManager(gRenderer, SCREEN_LEVEL1, font);
 	gOldTime = SDL_GetTicks();
@@ -44,7 +53,7 @@ int main(int argc, char* args[])
 
 bool InitSDL()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 	{
 		cout << "SDL did not initialise. Error: " << SDL_GetError();
 		return false;

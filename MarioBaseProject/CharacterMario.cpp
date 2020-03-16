@@ -1,6 +1,6 @@
 #include "CharacterMario.h"
 
-CharacterMario::CharacterMario(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario) : Character(renderer, imagePath, startPosition, map, isArcadeMario)
+CharacterMario::CharacterMario(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, SoundEffect* sounds) : Character(renderer, imagePath, startPosition, map)
 {
 	mHoldingJump = false;
 	mHoldingJumpPreviousFrame = false;
@@ -10,6 +10,7 @@ CharacterMario::CharacterMario(SDL_Renderer* renderer, string imagePath, Vector2
 	mSingleSpriteWidth = mTexture->GetWidth() / 7;
 	mSingleSpriteHeight = mTexture->GetHeight();
 	leftOfTilesheet = 0;
+	mSounds = sounds;
 }
 
 CharacterMario::~CharacterMario()
@@ -29,47 +30,8 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 	GroundCheck();
 
 	mWalkAnimationTime -= deltaTime;
-	if (!mIsGrounded)
-	{
-		leftOfTilesheet = 160;
-	}
-	else if (!mMovingLeft && !mMovingRight)
-	{
-		leftOfTilesheet = 0;
-	}
-	else if((mMovingLeft && mVelocity.x < 0) || (mMovingRight && mVelocity.x > 0))
-	{
-		if (mWalkAnimationTime <= 0 && leftOfTilesheet < 3 * mSingleSpriteWidth)
-		{
-			leftOfTilesheet += mSingleSpriteWidth;
-			if(!mIsRunning)
-				mWalkAnimationTime = MARIO_WALK_TIME;
-			else
-				mWalkAnimationTime = MARIO_RUN_TIME;
-		}
-		else if (mWalkAnimationTime <= 0 && leftOfTilesheet >= 3 * mSingleSpriteWidth)
-		{
-			leftOfTilesheet = mSingleSpriteWidth;
-			if (!mIsRunning)
-				mWalkAnimationTime = MARIO_WALK_TIME;
-			else
-				mWalkAnimationTime = MARIO_RUN_TIME;
-		}
-	}
-	else if ((mMovingLeft && mVelocity.x > 0) || (mMovingRight && mVelocity.x < 0))
-	{
-		leftOfTilesheet = 128;
-	}
-	
+	UpdateAnimation();
 }
-
-/*void CharacterMario::Render()
-{
-	if (mFacingDirection == FACING_RIGHT)
-		mTexture->Render(mPosition, SDL_FLIP_NONE);
-	else
-		mTexture->Render(mPosition, SDL_FLIP_HORIZONTAL);
-}*/
 
 void CharacterMario::Render()
 {
@@ -157,7 +119,7 @@ void CharacterMario::GroundCheck()
 	rightXPosition = (int)(mPosition.x + mSingleSpriteWidth) / TILE_WIDTH;
 	footPosition = (int)(mPosition.y + mSingleSpriteHeight) / TILE_WIDTH;
 	headPosition = (int)mPosition.y / TILE_WIDTH;
-	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == 1 && mIsJumping == false)
+	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == '1' && mIsJumping == false)
 	{
 		mPosition.y = (footPosition - 1) * TILE_WIDTH;
 		mIsGrounded = true;
@@ -170,17 +132,18 @@ void CharacterMario::GroundCheck()
 		mIsGrounded = false;
 	}
 
-	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == 1)
+	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '1')
 	{
 		mPosition.y = (headPosition + 1) * TILE_WIDTH;
+		mSounds->Play(SOUND_BUMP);
 		CancelJump();
 	}
-	else if (mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == 1 && mCurrentLevelMap->GetTileAt(footPosition - 1, leftXPosition) == 1)
+	else if (mCurrentLevelMap->GetTileAt(headPosition, leftXPosition) == '1' && mCurrentLevelMap->GetTileAt(footPosition - 1, leftXPosition) == 1)
 	{
 		mPosition.x = (leftXPosition + 1) * TILE_WIDTH;
 		mVelocity.x = 0;
 	}
-	else if (mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == 1 && mCurrentLevelMap->GetTileAt(footPosition - 1, rightXPosition) == 1)
+	else if (mCurrentLevelMap->GetTileAt(headPosition, rightXPosition) == '1' && mCurrentLevelMap->GetTileAt(footPosition - 1, rightXPosition) == 1)
 	{
 		mPosition.x = (rightXPosition - 1) * TILE_WIDTH;
 		mVelocity.x = 0;
@@ -194,7 +157,10 @@ void CharacterMario::JumpCheck(float deltaTime)
 		(!mIsGrounded && mHoldingJump && mIsJumping && mJumpTime > 0))
 	{
 		if (mVelocity.y == 0)
+		{
+			mSounds->Play(SOUND_JUMP);
 			mVelocity.y = 1 * deltaTime;
+		}	
 
 		if(mVelocity.x >= 0)
 			mVelocity.y = -(MARIO_JUMP_SPEED + mVelocity.x*0.3);
@@ -237,7 +203,7 @@ void CharacterMario::AddFriction()
 			mAccel.x = -MARIO_GROUND_FRICTION_A * 2;
 		}
 
-		if (mVelocity.x > -0.01 && mVelocity.x < 0.01)
+		if (mVelocity.x > -0.02 && mVelocity.x < 0.02)
 		{
 			mVelocity.x = 0;
 			mAccel.x = 0;
@@ -302,4 +268,39 @@ void CharacterMario::KoopaBounce(float deltaTime)
 		mVelocity.y = -MARIO_BOUNCE_SPEED * 4;
 	mJumpTime = 0;
 	mIsJumping = false;
+}
+
+void CharacterMario::UpdateAnimation()
+{
+	if (!mIsGrounded)
+	{
+		leftOfTilesheet = 160;
+	}
+	else if (!mMovingLeft && !mMovingRight)
+	{
+		leftOfTilesheet = 0;
+	}
+	else if ((mMovingLeft && mVelocity.x < 0) || (mMovingRight && mVelocity.x > 0))
+	{
+		if (mWalkAnimationTime <= 0 && leftOfTilesheet < 3 * mSingleSpriteWidth)
+		{
+			leftOfTilesheet += mSingleSpriteWidth;
+			if (!mIsRunning)
+				mWalkAnimationTime = MARIO_WALK_TIME;
+			else
+				mWalkAnimationTime = MARIO_RUN_TIME;
+		}
+		else if (mWalkAnimationTime <= 0 && leftOfTilesheet >= 3 * mSingleSpriteWidth)
+		{
+			leftOfTilesheet = mSingleSpriteWidth;
+			if (!mIsRunning)
+				mWalkAnimationTime = MARIO_WALK_TIME;
+			else
+				mWalkAnimationTime = MARIO_RUN_TIME;
+		}
+	}
+	else if ((mMovingLeft && mVelocity.x > 0) || (mMovingRight && mVelocity.x < 0))
+	{
+		leftOfTilesheet = 128;
+	}
 }

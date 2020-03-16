@@ -45,7 +45,19 @@
     <ClCompile Include="CharacterKoopa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScreenGameOver.cpp">
+    <ClCompile Include="CharacterCoin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collisions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScreenGameOver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScreenBeat1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,7 +95,19 @@
     <ClInclude Include="Character.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="ScreenGameOver.h">
+    <ClInclude Include="CharacterCoin.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collisions.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScreenGameOver.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScreenBeat1.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEffect.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>

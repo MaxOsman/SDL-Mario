@@ -1,5 +1,6 @@
 #pragma once
 #include "LevelMap.h"
+#include "SoundEffect.h"
 
 class Character
 {
@@ -25,9 +26,11 @@ protected:
 	Vector2D mPosition;
 	Texture2D* mTexture;
 	LevelMap* mCurrentLevelMap;
+	SoundEffect* mSounds;
 
 public:
-	Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, bool isArcadeMario);
+	Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map);
+	Character(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, SoundEffect* sounds);
 	~Character();
 
 	virtual void Render();
