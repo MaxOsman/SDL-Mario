@@ -7,20 +7,21 @@
 #include "Constants.h"
 #include <iostream>
 #include "GameScreenManager.h"
+#include "Scores.h"
 using namespace std;
 
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 GameScreenManager* gameScreenManager;
+Scores* gScores;
 Uint32 gOldTime;
-TTF_Font* font;
+TTF_Font* gFont;
 
 bool InitSDL();
 void CloseSDL();
 bool Update();
 
 void Render();
-int angle = 0;
 
 int main(int argc, char* args[])
 {
@@ -30,8 +31,9 @@ int main(int argc, char* args[])
 	{
 		cout << "Music Load Error!" << endl;
 	} 
-	font = TTF_OpenFont("arial.ttf", 20);
-	gameScreenManager = new GameScreenManager(gRenderer, SCREEN_LEVEL2, font);
+	gFont = TTF_OpenFont("arial.ttf", 20);
+	gScores = new Scores();
+	gameScreenManager = new GameScreenManager(gRenderer, SCREEN_INTRO, gFont, gScores);
 	gOldTime = SDL_GetTicks();
 	bool quit = false;
 
@@ -77,7 +79,7 @@ void CloseSDL()
 	gameScreenManager = NULL;
 	gRenderer = NULL;
 	gWindow = NULL;
-	TTF_CloseFont(font);
+	TTF_CloseFont(gFont);
 	TTF_Quit();
 	SDL_Quit();
 }

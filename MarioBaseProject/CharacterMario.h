@@ -12,6 +12,7 @@ private:
 	bool mHoldingJumpPreviousFrame;
 	bool mIsJumping;
 	float mJumpTime;
+	int mScore;
 
 public:
 	CharacterMario(SDL_Renderer* renderer, string imagePath, Vector2D startPosition, LevelMap* map, SoundEffect* sounds);
@@ -31,4 +32,5 @@ public:
 	void UpdateAnimation();
 	Vector2D GetVelocity() { return mVelocity; }
 	Texture2D* GetTexture() { return mTexture; }
+	int GetScore() { return mScore; }
 };

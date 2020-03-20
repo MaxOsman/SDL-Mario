@@ -9,6 +9,7 @@
 #include <vector>
 #include <time.h>
 #include <sstream>
+#include <fstream>
 
 class Texture2D;
 
@@ -36,8 +37,9 @@ private:
 	float koopaSpawnTime;
 	float coinSpawnTime;
 	int mScore;
+	Scores* mScores;
 public:
-	GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color);
+	GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color, Scores* scores);
 	~GameScreenLevel1();
 
 	void Render();

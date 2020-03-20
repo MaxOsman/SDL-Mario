@@ -1,6 +1,6 @@
 #include "GameScreenLevel1.h"
 
-GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color) : GameScreen(renderer, font, color)
+GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color, Scores* scores) : GameScreen(renderer, font, color)
 {
 	mLevelMap = NULL;
 	SetUpLevel();
@@ -8,9 +8,11 @@ GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, TTF_Font* font, SDL_C
 	coinSpawnTime = COIN_SPAWN_TIME;
 	mScore = 0;
 	mCollisions = Collisions();
-	mTime = 120;
+	mTime = 60;
 	mSecondCountdown = 1.0f;
+	mScores = scores;
 
+	Mix_HaltChannel(-1);
 	mGusic = Mix_LoadMUS("Sounds/Mario_.mp3");
 	if (Mix_PlayingMusic() == 0)
 	{
@@ -46,6 +48,7 @@ GameScreenLevel1::~GameScreenLevel1()
 	mLevelMap = NULL;
 	Mix_FreeMusic(mGusic);
 	mGusic = nullptr;
+	delete mScores;
 }
 
 void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
@@ -343,9 +346,8 @@ void GameScreenLevel1::SpawnCoins(float deltaTime)
 void GameScreenLevel1::ImportText(const char* text)
 {
 	if (!(mSurface = TTF_RenderText_Shaded(mFont, text, mColor, { 0, 0, 0 })))
-	{
-		std::cout << "Text surface error." << std::endl;
-	}
+		cout << "Text surface error." << endl;
+
 	mTextTexture = SDL_CreateTextureFromSurface(mRenderer, mSurface);
 }
 
@@ -365,6 +367,10 @@ void GameScreenLevel1::TimeCountdown(float deltaTime)
 		mSecondCountdown = 1.0f;
 		--mTime;
 	}
-	if(mTime <= 0)
+	if (mTime <= 0)
+	{
+		//END OF LEVEL
+		mScores->StoreTemp(1, mScore);
 		mNextScreen = SCREEN_BEAT1;
+	}	
 }

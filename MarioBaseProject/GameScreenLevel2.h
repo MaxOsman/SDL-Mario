@@ -20,20 +20,21 @@ private:
 	ostringstream oss2;
 	Collisions mCollisions;
 	Mix_Music* mGusic;
+	LevelMap* mLevelMap;
+	Scores* mScores;
 
 	int mScore;
+	bool canReset;
 public:
-	GameScreenLevel2(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color);
+	GameScreenLevel2(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color, Scores* scores);
 	~GameScreenLevel2();
 
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
+
 	void SetLevelMap();
 	void ImportText(const char* text);
-
 	void TimeCountdown(float deltaTime);
-
+	void ResetBlocks();
 	int GetScore() { return mScore; }
-
-	LevelMap* mLevelMap;
 };

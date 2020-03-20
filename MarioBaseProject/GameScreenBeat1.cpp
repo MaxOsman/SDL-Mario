@@ -2,7 +2,8 @@
 
 GameScreenBeat1::GameScreenBeat1(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color) : GameScreen(renderer, font, color)
 {
-
+	Mix_HaltMusic();
+	Mix_HaltChannel(-1);
 }
 
 GameScreenBeat1::~GameScreenBeat1()
@@ -16,7 +17,7 @@ void GameScreenBeat1::Render()
 	SDL_RenderClear(mRenderer);
 
 	ImportText((string("Level 1 Complete! Press Space to continue!")).c_str());
-	DrawText(Vector2D(SCREEN_WIDTH/5, SCREEN_HEIGHT/2));
+	DrawText(Vector2D(SCREEN_WIDTH/6, SCREEN_HEIGHT/2));
 
 	SDL_RenderPresent(mRenderer);
 }

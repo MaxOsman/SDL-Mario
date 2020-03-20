@@ -132,7 +132,15 @@ void CharacterMario::GroundCheck()
 		mIsGrounded = false;
 	}
 
-	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '1' || mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '2' || mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '3' || mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '4')
+	if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '3')
+	{
+		mPosition.y = (headPosition + 1) * TILE_WIDTH;
+		mSounds->Play(SOUND_COIN);
+		++mScore;
+		mCurrentLevelMap->ChangeTileAt(headPosition, centralXPosition, '4');
+		CancelJump();
+	}
+	else if (mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '1' || mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '2' || mCurrentLevelMap->GetTileAt(headPosition, centralXPosition) == '4')
 	{
 		mPosition.y = (headPosition + 1) * TILE_WIDTH;
 		mSounds->Play(SOUND_BUMP);

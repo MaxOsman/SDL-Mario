@@ -135,13 +135,16 @@
     <ClCompile Include="Collisions.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="GameScreenBeat1.cpp" />
+    <ClCompile Include="GameScreenBeat2.cpp" />
     <ClCompile Include="GameScreenIntro.cpp" />
     <ClCompile Include="GameScreenLevel1.cpp" />
     <ClCompile Include="GameScreenLevel2.cpp" />
     <ClCompile Include="GameScreenManager.cpp" />
+    <ClCompile Include="GameScreenScores.cpp" />
     <ClCompile Include="LevelMap.cpp" />
     <ClCompile Include="PowBlock.cpp" />
     <ClCompile Include="GameScreenGameOver.cpp" />
+    <ClCompile Include="Scores.cpp" />
     <ClCompile Include="SoundEffect.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Texture2D.cpp" />
@@ -156,13 +159,16 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="GameScreenBeat1.h" />
+    <ClInclude Include="GameScreenBeat2.h" />
     <ClInclude Include="GameScreenIntro.h" />
     <ClInclude Include="GameScreenLevel1.h" />
     <ClInclude Include="GameScreenLevel2.h" />
     <ClInclude Include="GameScreenManager.h" />
+    <ClInclude Include="GameScreenScores.h" />
     <ClInclude Include="LevelMap.h" />
     <ClInclude Include="PowBlock.h" />
     <ClInclude Include="GameScreenGameOver.h" />
+    <ClInclude Include="Scores.h" />
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="Texture2D.h" />
   </ItemGroup>

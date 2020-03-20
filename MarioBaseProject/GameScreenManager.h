@@ -3,6 +3,7 @@
 #include "Commons.h"
 #include "SDL.h"
 #include <SDL_ttf.h>
+#include "Scores.h"
 
 class GameScreen;
 
@@ -12,9 +13,10 @@ private:
 	SDL_Renderer* mRenderer;
 	GameScreen* mCurrentScreen;
 	TTF_Font* mFont;
+	Scores* mScores;
 
 public:
-	GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen, TTF_Font* font);
+	GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen, TTF_Font* font, Scores* scores);
 	~GameScreenManager();
 
 	void Render();

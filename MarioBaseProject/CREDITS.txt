@@ -1,4 +1,6 @@
 Sound loading based on tutorial by CodingMadeEasy
+Title Screen by Nintendo, https://www.nintendo.co.uk/Games/Nintendo-Switch-download-software/Arcade-Archives-Mario-Bros--1276808.html
+Other graphics from Nintendo
 Sounds:
 	Jump by coby12388
 	Coin by ProjectsU012

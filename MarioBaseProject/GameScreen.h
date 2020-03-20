@@ -5,6 +5,7 @@
 #include "Commons.h"
 #include <iostream>
 #include "SoundEffect.h"
+#include "Scores.h"
 
 class GameScreen
 {

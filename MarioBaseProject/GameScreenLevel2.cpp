@@ -1,15 +1,18 @@
 #include "GameScreenLevel2.h"
 
-GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color) : GameScreen(renderer, font, color)
+GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color, Scores* scores) : GameScreen(renderer, font, color)
 {
 	mLevelMap = NULL;
 	SetUpLevel();
 	mScore = 0;
 	mCollisions = Collisions();
-	mTime = 120;
+	mTime = 60;
 	mSecondCountdown = 1.0f;
+	canReset = true;
+	mScores = scores;
 
-	mGusic = Mix_LoadMUS("Sounds/MarioUnderworld.mp3");
+	Mix_HaltChannel(-1);
+	mGusic = Mix_LoadMUS("Sounds/MarioUnderworld_.mp3");
 	if (Mix_PlayingMusic() == 0)
 	{
 		Mix_PlayMusic(mGusic, -1);
@@ -18,24 +21,27 @@ GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer, TTF_Font* font, SDL_C
 	mSounds->AddSound("Sounds/death.wav", SOUND_DIE);
 	mSounds->AddSound("Sounds/jump_.wav", SOUND_JUMP);
 	mSounds->AddSound("Sounds/bump_.wav", SOUND_BUMP);
+	mSounds->AddSound("Sounds/stomp_.wav", SOUND_STOMP);
 }
 
 GameScreenLevel2::~GameScreenLevel2()
 {
-	/*delete brickTexture;
-	brickTexture = NULL;*/
 	delete marioCharacter;
 	marioCharacter = NULL;
 	delete mLevelMap;
 	mLevelMap = NULL;
 	Mix_FreeMusic(mGusic);
 	mGusic = nullptr;
+	delete mScores;
 }
 
 void GameScreenLevel2::Update(float deltaTime, SDL_Event e)
 {
 	marioCharacter->Update(deltaTime, e);
+	mLevelMap->Update(deltaTime);
 	TimeCountdown(deltaTime);
+	mScore = marioCharacter->GetScore();
+	ResetBlocks();
 }
 
 void GameScreenLevel2::Render()
@@ -67,7 +73,7 @@ void GameScreenLevel2::SetLevelMap()
 	}
 
 	//Set up new one.
-	mLevelMap = new LevelMap(map, "Images/brick.bmp", "Images/brick.bmp", "Images/brick.bmp", mRenderer);
+	mLevelMap = new LevelMap(map, "Images/GroundBlock.bmp", "Images/CoinBlock.bmp", "Images/EmptyBlock.bmp", mRenderer);
 	mLevelMap->LoadMapFromFile(2);
 }
 
@@ -77,12 +83,6 @@ void GameScreenLevel2::SetUpLevel()
 
 	//Player Characters
 	marioCharacter = new CharacterMario(mRenderer, "Images/MarioAll.bmp", Vector2D(240, 352), mLevelMap, mSounds);
-
-	/*brickTexture = new Texture2D(mRenderer);
-	if (!brickTexture->LoadFromFile("Images/brick.bmp"))
-	{
-		std::cout << "Failed to load brick texture.";
-	}*/
 }
 
 void GameScreenLevel2::ImportText(const char* text)
@@ -102,6 +102,34 @@ void GameScreenLevel2::TimeCountdown(float deltaTime)
 		mSecondCountdown = 1.0f;
 		--mTime;
 	}
-	if(mTime <= 0)
+	if (mTime <= 0)
+	{
+		//END OF LEVEL
+		mScores->StoreTemp(2, mScore);
 		mNextScreen = SCREEN_BEAT2;
+	}
+}
+
+void GameScreenLevel2::ResetBlocks()
+{
+	if (mScore % 36 == 0 && mScore != 0)
+	{
+		if (canReset)
+		{
+			for (unsigned int i = 0; i < MAP_HEIGHT; ++i)
+			{
+				for (unsigned int j = 0; j < MAP_WIDTH; ++j)
+				{
+					if (mLevelMap->GetTileAt(i, j) == '4')
+						mLevelMap->ChangeTileAt(i, j, '3');
+				}
+			}
+			canReset = false;
+			mSounds->Play(SOUND_STOMP);
+		}
+	}
+	else
+	{
+		canReset = true;
+	}
 }

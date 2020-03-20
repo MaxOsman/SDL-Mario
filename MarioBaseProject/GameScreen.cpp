@@ -12,8 +12,6 @@ GameScreen::GameScreen(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color)
 
 GameScreen::~GameScreen()
 {
-	//SDL_DestroyTexture(mTextTexture);
-	//SDL_FreeSurface(mSurface);
 	mFont = NULL;
 	mRenderer = NULL;
 	delete mSounds;
@@ -36,7 +34,6 @@ void GameScreen::DrawText(Vector2D position)
 	SDL_QueryTexture(mTextTexture, NULL, NULL, &texW, &texH);
 	SDL_Rect textRect = { position.x, position.y, texW, texH };
 	SDL_RenderCopy(mRenderer, mTextTexture, NULL, &textRect);
-	//SDL_RenderPresent(mRenderer);
 	SDL_DestroyTexture(mTextTexture);
 	SDL_FreeSurface(mSurface);
 }

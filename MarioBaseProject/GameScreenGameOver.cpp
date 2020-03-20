@@ -2,7 +2,7 @@
 
 GameScreenGameOver::GameScreenGameOver(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color) : GameScreen(renderer, font, color)
 {
-
+	Mix_HaltMusic();
 }
 
 GameScreenGameOver::~GameScreenGameOver()

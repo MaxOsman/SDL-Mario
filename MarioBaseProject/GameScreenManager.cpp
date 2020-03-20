@@ -4,13 +4,16 @@
 #include "GameScreenLevel2.h"
 #include "GameScreenGameOver.h"
 #include "GameScreenBeat1.h"
+#include "GameScreenBeat2.h"
 #include "GameScreenIntro.h"
+#include "GameScreenScores.h"
 
-GameScreenManager::GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen, TTF_Font* font)
+GameScreenManager::GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen, TTF_Font* font, Scores* scores)
 {
 	mRenderer = renderer;
 	mCurrentScreen = NULL;
 	mFont = font;
+	mScores = scores;
 
 	//Set up 1st screen
 	ChangeScreen(startScreen);
@@ -21,6 +24,9 @@ GameScreenManager::~GameScreenManager()
 	mRenderer = NULL;
 	delete mCurrentScreen;
 	mCurrentScreen = NULL;
+	delete mScores;
+	mScores = NULL;
+	mFont = NULL;
 }
 
 void GameScreenManager::Render()
@@ -45,7 +51,7 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 	{
 	case SCREEN_LEVEL1:
 		GameScreenLevel1* tempScreen1;
-		tempScreen1 = new GameScreenLevel1(mRenderer, mFont, { 255, 255, 255 });
+		tempScreen1 = new GameScreenLevel1(mRenderer, mFont, { 255, 255, 255 }, mScores);
 		mCurrentScreen = (GameScreen*)tempScreen1;
 		tempScreen1 = NULL;
 		delete tempScreen1;
@@ -53,7 +59,7 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 
 	case SCREEN_LEVEL2:
 		GameScreenLevel2* tempScreen2;
-		tempScreen2 = new GameScreenLevel2(mRenderer, mFont, { 255, 255, 255 });
+		tempScreen2 = new GameScreenLevel2(mRenderer, mFont, { 255, 255, 255 }, mScores);
 		mCurrentScreen = (GameScreen*)tempScreen2;
 		tempScreen2 = NULL;
 		delete tempScreen2;
@@ -75,12 +81,28 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 		delete tempScreenB1;
 		break;
 
+	case SCREEN_BEAT2:
+		GameScreenBeat2* tempScreenB2;
+		tempScreenB2 = new GameScreenBeat2(mRenderer, mFont, { 64, 255, 64 });
+		mCurrentScreen = (GameScreen*)tempScreenB2;
+		tempScreenB2 = NULL;
+		delete tempScreenB2;
+		break;
+
 	case SCREEN_INTRO:
 		GameScreenIntro* tempScreenI;
 		tempScreenI = new GameScreenIntro(mRenderer, mFont, { 255, 255, 255 });
 		mCurrentScreen = (GameScreen*)tempScreenI;
 		tempScreenI = NULL;
 		delete tempScreenI;
+		break;
+
+	case SCREEN_SCORES:
+		GameScreenScores* tempScreenS;
+		tempScreenS = new GameScreenScores(mRenderer, mFont, { 255, 255, 255 }, mScores);
+		mCurrentScreen = (GameScreen*)tempScreenS;
+		tempScreenS = NULL;
+		delete tempScreenS;
 		break;
 	}
 }

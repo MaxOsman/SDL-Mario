@@ -2,18 +2,26 @@
 
 GameScreenIntro::GameScreenIntro(SDL_Renderer* renderer, TTF_Font* font, SDL_Color color) : GameScreen(renderer, font, color)
 {
-
+	//Background
+	mBackgroundTexture = new Texture2D(mRenderer);
+	if (!mBackgroundTexture->LoadFromFile("Images/BackgroundTitle.bmp"))
+	{
+		std::cout << "Failed to load background texture.";
+	}
 }
 
 GameScreenIntro::~GameScreenIntro()
 {
-
+	delete mBackgroundTexture;
+	mBackgroundTexture = NULL;
 }
 
 void GameScreenIntro::Render()
 {
 	SDL_SetRenderDrawColor(mRenderer, 0x00, 0x00, 0x00, 0x00);
 	SDL_RenderClear(mRenderer);
+
+	mBackgroundTexture->Render(Vector2D(0, 0), SDL_FLIP_NONE);
 
 	ImportText((string("Press Space to begin.")).c_str());
 	DrawText(Vector2D(SCREEN_WIDTH/3, SCREEN_HEIGHT*0.75f));
